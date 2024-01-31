@@ -3,7 +3,7 @@ var rainbowEnable = false;
 var ws = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
 ws.onopen = function () {
   console.log('WebSocket Connect');
-  ws.send('Connect ' + new Date());
+  ws.send('WebSocket Connect');
 };
 ws.onerror = function (error) {
   console.log('WebSocket Error ', error);

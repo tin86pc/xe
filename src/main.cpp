@@ -168,6 +168,9 @@ void nhayled(){
 
     digitalWrite(ledPin, ledState);
     Serial.println(".");
+    // webSocket.sendTXT(0, "1");
+    // send data to all connected clients
+      webSocket.broadcastTXT("payload", 1);
   }
 }
 
