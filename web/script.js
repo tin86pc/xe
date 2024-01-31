@@ -1,16 +1,17 @@
 console.log("esp 8266");
 var rainbowEnable = false;
-var connection = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
-connection.onopen = function () {
-  connection.send('Connect ' + new Date());
+var ws = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
+ws.onopen = function () {
+  console.log('WebSocket Connect');
+  ws.send('Connect ' + new Date());
 };
-connection.onerror = function (error) {
+ws.onerror = function (error) {
   console.log('WebSocket Error ', error);
 };
-connection.onmessage = function (e) {
+ws.onmessage = function (e) {
   console.log('Server: ', e.data);
 };
-connection.onclose = function () {
+ws.onclose = function () {
   console.log('WebSocket connection closed');
 };
 
@@ -22,13 +23,13 @@ function sendRGB () {
   var rgb = r << 20 | g << 10 | b;
   var rgbstr = '#' + rgb.toString(16);
   console.log('RGB: ' + rgbstr);
-  connection.send(rgbstr);
+  ws.send(rgbstr);
 }
 
 function rainbowEffect () {
   rainbowEnable = ! rainbowEnable;
   if (rainbowEnable) {
-    connection.send("R");
+    ws.send("R");
     document.getElementById('rainbow').style.backgroundColor = '#00878F';
     document.getElementById('r').className = 'disabled';
     document.getElementById('g').className = 'disabled';
@@ -37,7 +38,7 @@ function rainbowEffect () {
     document.getElementById('g').disabled = true;
     document.getElementById('b').disabled = true;
   } else {
-    connection.send("N");
+    ws.send("N");
     document.getElementById('rainbow').style.backgroundColor = '#999';
     document.getElementById('r').className = 'enabled';
     document.getElementById('g').className = 'enabled';

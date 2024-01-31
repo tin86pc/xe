@@ -12,8 +12,7 @@ ESP8266WebServer sv(80);
 ESP8266HTTPUpdateServer u; // nạp chương trình qua wifi
 WebSocketsServer webSocket(81);    // create a websocket server on port 81
 
-bool ledState = 0;
-const int ledPin = 2;
+
 void startWifi(){
   WiFi.mode(WIFI_AP_STA);
   WiFi.softAP("abc", "12345678");
@@ -118,6 +117,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
         IPAddress ip = webSocket.remoteIP(num);
         Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
         rainbow = false;                  // Turn rainbow off when a new connection is established
+        webSocket.sendTXT(num,"Connected");         
       }
       break;
     case WStype_TEXT:                     // if new text data is received
@@ -136,6 +136,10 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
       } else if (payload[0] == 'N') {                      // the browser sends an N when the rainbow effect is disabled
         rainbow = false;
       }
+
+      String echoMessage = "Received:  " + String((char*)payload);
+      webSocket.sendTXT(num, echoMessage);
+
       break;
   }
 }
@@ -145,6 +149,29 @@ void startWebSocket() { // Start a WebSocket server
   webSocket.onEvent(webSocketEvent);          // if there's an incomming websocket message, go to function 'webSocketEvent'
   Serial.println("WebSocket server started.");
 }
+
+
+#define ledPin 2
+int ledState = LOW;            
+long int previousMillis = 0;     
+
+long interval = 1000;          
+void nhayled(){
+  long int currentMillis = millis();
+ 
+  if(currentMillis - previousMillis > interval) {
+    previousMillis = currentMillis;  
+    if (ledState == LOW)
+      ledState = HIGH;
+    else
+      ledState = LOW;
+
+    digitalWrite(ledPin, ledState);
+    Serial.println(".");
+  }
+}
+
+
 
 void setup()
 {    
@@ -162,4 +189,8 @@ void loop()
 {
   webSocket.loop();  
   sv.handleClient();
+  nhayled();
 }
+
+
+
