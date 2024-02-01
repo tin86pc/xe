@@ -151,12 +151,13 @@ void startWebSocket() { // Start a WebSocket server
 }
 
 
+
+
 #define ledPin 2
 int ledState = LOW;            
 long int previousMillis = 0;     
-
-long interval = 1000;          
-void nhayled(){
+   
+void nhayled(long interval){
   long int currentMillis = millis();
  
   if(currentMillis - previousMillis > interval) {
@@ -169,8 +170,7 @@ void nhayled(){
     digitalWrite(ledPin, ledState);
     Serial.println(".");
     // webSocket.sendTXT(0, "1");
-    // send data to all connected clients
-      webSocket.broadcastTXT("payload", 1);
+    webSocket.broadcastTXT("12345");  // send data to all connected clients
   }
 }
 
@@ -192,7 +192,7 @@ void loop()
 {
   webSocket.loop();  
   sv.handleClient();
-  nhayled();
+  nhayled(1000);
 }
 
 
