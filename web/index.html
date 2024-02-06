@@ -8,29 +8,30 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<style>
-  .grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-  }
-</style>
-
 <body>
 
   <div class="grid-container">
     <div class="item1">
+
       <input type="button" value="Cài đặt" onclick="caidat()">
       <input type="button" value="Bật" onclick="bat()">
       <input type="button" value="Tắt" onclick="tat()">
 
+
     </div>
     <div class="item2">
-      <input class="enabled" id="r" type="range" min="-45" max="45" step="1" oninput="sendRGB()" value="0">
+      <br>
+      <label id="Hlabel">0</label>
+      <br>
+      <input class="enabled" id="Hrange" type="range" min="-45" max="45" step="1" oninput="capNhatHuong()" value="0">
     </div>
 
     <div class="item3">
-      <input class="enabled" id="g" type="range" min="-10" max="10" step="1" oninput="sendRGB()" value="0">
+      <label id="Vlabel">0</label>
+      <input class="enabled" id="Vrange" type="range" min="-5" max="10" step="1" oninput="capNhatTocDo()" value="0">
+      <br>
       <input type="button" value="nhanh" onclick="nhanh()">
+      <br>
       <input type="button" value="cham" onclick="cham()">
     </div>
 

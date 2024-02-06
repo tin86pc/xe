@@ -86,3 +86,17 @@ function unlock () {
   else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
   else if (document.msExitFullscreen) { document.msExitFullscreen(); }
 }
+
+function capNhatHuong() {
+  const Hrange = document.getElementById('Hrange');
+  const Hlabel = document.getElementById('Hlabel');
+  Hlabel.innerText = Hrange.value;
+}
+
+function capNhatTocDo() {
+  const Vrange = document.getElementById('Vrange');
+  const Vlabel = document.getElementById('Vlabel');
+  Vlabel.innerText = Vrange.value;
+}
+
+
