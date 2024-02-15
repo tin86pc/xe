@@ -1,43 +1,53 @@
 <!DOCTYPE html>
 <html lang="vi">
+  <head>
+    <title>Điều khiển xe</title>
+    <meta charset="UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      name="viewport"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <title>LED Control</title>
-  <meta charset="UTF-8">
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
-  <link rel="stylesheet" href="style.css">
-</head>
+  <body>
+    <div class="grid-container">
+      <div class="trang-thai">
+        <input type="button" value="Cài đặt" onclick="caidat()" />
+        <input type="button" value="Bật" onclick="bat()" />
+        <input type="button" value="Tắt" onclick="tat()" />
+      </div>
 
-<body>
+      <div class="huong">
+        <div class="vo-lang">
+            <div id="bk"></div>
+            <div id="dk"></div>
+       
+        </div>
+      </div>
 
-  <div class="grid-container">
-    <div class="item1">
+      <div class="can-so">
+        <p>P</p>
+        <p>R</p>
+        <p>N</p>
+        <p>D</p>
+      </div>
 
-      <input type="button" value="Cài đặt" onclick="caidat()">
-      <input type="button" value="Bật" onclick="bat()">
-      <input type="button" value="Tắt" onclick="tat()">
-
-
+      <div class="chan-ga">
+        <label id="Vlabel">0</label>
+        <input
+          class="enabled"
+          id="Vrange"
+          type="range"
+          min="-5"
+          max="10"
+          step="1"
+          oninput="capNhatTocDo()"
+          value="0"
+        />
+      </div>
     </div>
-    <div class="item2">
-      <br>
-      <label id="Hlabel">0</label>
-      <br>
-      <input class="enabled" id="Hrange" type="range" min="-45" max="45" step="1" oninput="capNhatHuong()" value="0">
-    </div>
 
-    <div class="item3">
-      <label id="Vlabel">0</label>
-      <input class="enabled" id="Vrange" type="range" min="-5" max="10" step="1" oninput="capNhatTocDo()" value="0">
-      <br>
-      <input type="button" value="nhanh" onclick="nhanh()">
-      <br>
-      <input type="button" value="cham" onclick="cham()">
-    </div>
-
-  </div>
-
-  <script src="script.js" type="text/javascript"></script>
-</body>
-
+    <script src="script.js" type="text/javascript"></script>
+  </body>
 </html>
