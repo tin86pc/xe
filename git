@@ -1,0 +1,4 @@
+sửa lỗi git
+git fetch
+git rebase main/main
+git push origin main/main
