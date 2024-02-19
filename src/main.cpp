@@ -16,7 +16,8 @@ void startWifi()
 {
   WiFi.mode(WIFI_AP_STA);
   WiFi.softAP("abc", "12345678");
-  WiFi.begin("Tuyen T1", "0978333563");
+  // WiFi.begin("Tuyen T1", "0978333563");
+  WiFi.begin("Mercusys", "mot2345678");
   while (WiFi.waitForConnectResult() != WL_CONNECTED)
   {
     delay(100);
