@@ -1,12 +1,6 @@
 console.log("esp 8266");
-<<<<<<< HEAD
 
 var ws = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
-=======
-var rainbowEnable = false;
-
-var ws = new WebSocket("ws://" + location.hostname + ":81/", ["arduino"]);
->>>>>>> 316ed9ab64fdf0cc4fde31303fecfef1f3e6adaa
 ws.onopen = function () {
   console.log("WebSocket Connect");
   ws.send("WebSocket Connect");
@@ -48,7 +42,6 @@ const bat = () => {
   console.log("width " + screen.width);
 
   ws.send("B");
-<<<<<<< HEAD
 
   document.getElementById('r').className = 'enabled';
   document.getElementById('g').className = 'enabled';
@@ -57,8 +50,6 @@ const bat = () => {
   document.getElementById('g').disabled = false;
   document.getElementById('b').disabled = false;
   sendRGB();
-=======
->>>>>>> 316ed9ab64fdf0cc4fde31303fecfef1f3e6adaa
 
   document.getElementById("r").className = "enabled";
   document.getElementById("g").className = "enabled";
