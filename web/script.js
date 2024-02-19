@@ -1,6 +1,4 @@
 console.log("esp 8266");
-var rainbowEnable = false;
-
 
 var ws = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
 ws.onopen = function () {
@@ -33,10 +31,18 @@ function sendRGB() {
 }
 
 const bat = () => {
+
+  document.getElementById('bat').style.display = 'block';
+  document.getElementById('tat').style.display = 'none';
+
+
   lock("landscape");
 
+  console.log("height " + screen.height);
+  console.log("width " + screen.width);
+
   ws.send("B");
-  
+
   document.getElementById('r').className = 'enabled';
   document.getElementById('g').className = 'enabled';
   document.getElementById('b').className = 'enabled';
@@ -48,6 +54,10 @@ const bat = () => {
 }
 
 const tat = () => {
+
+  document.getElementById('bat').style.display = 'none';
+  document.getElementById('tat').style.display = 'block';
+
   unlock();
   ws.send("T");
 
@@ -63,7 +73,7 @@ var myScreenOrientation = window.screen.orientation;
 
 
 // (A) LOCK SCREEN ORIENTATION
-function lock (orientation) {
+function lock(orientation) {
   // (A1) GO INTO FULL SCREEN FIRST
   let de = document.documentElement;
   if (de.requestFullscreen) { de.requestFullscreen(); }
@@ -76,7 +86,7 @@ function lock (orientation) {
 }
 
 // (B) UNLOCK SCREEN ORIENTATION
-function unlock () {
+function unlock() {
   // (B1) UNLOCK FIRST
   screen.orientation.unlock();
 
@@ -100,3 +110,7 @@ function capNhatTocDo() {
 }
 
 
+function khoiTao() {
+  tat();
+} 
+khoiTao();
