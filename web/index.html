@@ -2,7 +2,7 @@
 <html lang="vi">
 
 <head>
-  <title>LED Control</title>
+  <title>XEEM</title>
   <meta charset="UTF-8">
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
   <link rel="stylesheet" href="style.css">
@@ -30,25 +30,15 @@
     .nut:active {
       background-color: #3e8e41;
     }
-
-    #tat {
-      left: 40vw;
-      top: 10vw;
-      position: fixed;
-      background-color: yellow;
-    }
   </style>
-
-
 
 
 </head>
 
 <body>
-
   <div id="tat">
-    <button onclick="bat()">
-      <svg height="20vw" width="20vw" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+    <button style="left:40vw;top:7vw;width:20vw;height:20vw;" class="nut fix" onclick="bat()">
+      <svg height="15vw" width="15vw" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
         <g>
           <path style="fill:#64C37D;" d="M256,512C128.502,512,24.774,408.272,24.774,280.774c0-84.49,46.065-162.23,120.216-202.879
@@ -60,9 +50,9 @@
 		c13.682,0,24.774,11.092,24.774,24.774v165.161C280.774,203.617,269.682,214.71,256,214.71z" />
         </g>
       </svg>
-
     </button>
   </div>
+
 
   <div id="bat">
     <button style="left:50vw;top:0vw;" class="nut fix">P</button>
@@ -203,7 +193,6 @@
         </g>
       </svg>
     </button>
-
 
     <!-- re trai -->
     <button style="left:0vw;top:0vw;" class="nut fix">
@@ -355,15 +344,12 @@
     </div>
 
     <!-- chan ga -->
-    <div class="fix" style="left:81vw;top:15vw;">
-      <button style="height:30vw ;width:9vw ;border-radius: 3vw"></button>
-    </div>
+    <button onclick="ga()"class="fix nut" style="left:81vw;top:15vw;height:30vw ;width:9vw ;border-radius: 3vw"></button>
 
 
     <!-- chan phanh -->
-    <div class="fix" style="left:68vw;top:29vw;">
-      <button style="height:16vw ;width:9vw ;border-radius: 3vw"></button>
-    </div>
+    <button onclick="phanh()"class="fix nut" style="left:68vw;top:29vw;height:16vw ;width:9vw ;border-radius: 3vw"></button>
+
 
     <!-- hien thi toc do-->
     <div class="fix"
@@ -372,27 +358,23 @@
     </div>
 
 
-
-
-    <div class="fix" style="left:73vw;top:0.9vw;">
-      <button style="height:7vw ;width:7vw ;border-radius: 2vw;font-size: 3vw" onclick="tat()">
-        <svg height="4vw" width="4vw" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
-          <g>
-            <path style="fill:#ff0000;" d="M256,512C128.502,512,24.774,408.272,24.774,280.774c0-84.49,46.065-162.23,120.216-202.879
+    <!-- nut tat -->
+    <button class="fix nut" style="left:73vw;top:0.9vw;height:7vw ;width:7vw" onclick="tat()">
+      <svg height="4vw" width="4vw" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+        <g>
+          <path style="fill:#ff0000;" d="M256,512C128.502,512,24.774,408.272,24.774,280.774c0-84.49,46.065-162.23,120.216-202.879
 		c12.006-6.577,27.057-2.18,33.633,9.816c6.577,11.997,2.182,27.055-9.814,33.633c-58.282,31.949-94.487,93.039-94.487,159.43
 		c0,100.177,81.5,181.677,181.677,181.677s181.677-81.5,181.677-181.677c0-66.682-36.44-127.899-95.097-159.764
 		c-12.022-6.532-16.475-21.573-9.943-33.595s21.572-16.475,33.595-9.944c74.631,40.542,120.992,118.444,120.992,203.304
 		C487.226,408.272,383.498,512,256,512z" />
-            <path style="fill:#ff0000;" d="M256,214.71c-13.682,0-24.774-11.092-24.774-24.774V24.774C231.226,11.092,242.318,0,256,0
+          <path style="fill:#ff0000;" d="M256,214.71c-13.682,0-24.774-11.092-24.774-24.774V24.774C231.226,11.092,242.318,0,256,0
 		c13.682,0,24.774,11.092,24.774,24.774v165.161C280.774,203.617,269.682,214.71,256,214.71z" />
-          </g>
-        </svg>
-      </button>
-    </div>
+        </g>
+      </svg>
+    </button>
 
   </div>
-
 
 
   <script src="script.js" type="text/javascript"></script>
