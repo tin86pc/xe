@@ -141,12 +141,11 @@ function LayTam() {
   };
 }
 
-function LayToaDo(e) {
-  // <div onmousemove="myFunction(event)" onmouseout="clearCoor()"></div>
+function vt(e) {
   let X = 0;
   let Y = 0;
+
   if (e.type.includes(`touch`)) {
-    Toast("1")
     const { touches, changedTouches } = e.originalEvent ?? e;
     const touch = touches[0] ?? changedTouches[0];
     X = touch.pageX;
@@ -155,6 +154,7 @@ function LayToaDo(e) {
     X = e.clientX;
     Y = e.clientY;
   }
+
   return {
     x: X,
     y: Y
@@ -162,30 +162,11 @@ function LayToaDo(e) {
 }
 
 
-function LayToaDo2(e) {
-  if (e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel') {
-    Toast("22");
-    var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-    x = touch.pageX;
-    y = touch.pageY;
-  } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover' || e.type == 'mouseout' || e.type == 'mouseenter' || e.type == 'mouseleave') {
-    x = e.clientX;
-    y = e.clientY;
-  }
-}
-
-function myFunction(event) {
-  var x = event.touches[0].clientX;
-  var y = event.touches[0].clientY;
-  document.getElementById("demo").innerHTML = x + ", " + y;
-}
-
 
 
 function startVoLang(e) {
   anVoLang = true;
-  let vt = LayToaDo(e)
-  gocAn = Math.atan2(vt.x - LayTam().x, -(vt.y - LayTam().y)) * (180 / Math.PI);
+  gocAn = Math.atan2(vt(e).x - LayTam().x, -(vt(e).y - LayTam().y)) * (180 / Math.PI);
 }
 
 function upVolang() {
@@ -195,9 +176,8 @@ function upVolang() {
 
 function moveVolang(e) {
   if (anVoLang) {
-    let vt = LayToaDo(e)
-    angle = (Math.atan2(vt.x - LayTam().x, -(vt.y - LayTam().y))) * (180 / Math.PI) - gocAn + angleLuu;
-    console.log(Math.atan2(vt.x - LayTam().x, -(vt.y - LayTam().y)));
+    angle = (Math.atan2(vt(e).x - LayTam().x, -(vt(e).y - LayTam().y))) * (180 / Math.PI) - gocAn + angleLuu;
+    console.log(Math.atan2(vt(e).x - LayTam().x, -(vt(e).y - LayTam().y)));
     voLang.style.transform = `rotate(${angle}deg)`;
     document.getElementById("td").innerText = angle.toFixed(2);
   }
