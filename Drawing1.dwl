@@ -1,3 +1,0 @@
-laptopBGT
-LAPTOPBGT 
-21 Tha´ng Hai 2024  2:37:02 CH

@@ -1,33 +1,54 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  
+  -webkit-user-select: none;
+  -ms-user-select: none; 
+  user-select: none; 
+}
+
+.fix {
+  width: 10vw;
+  height: 10vw;
+  position: fixed;
+}
+
+.nut {
+  background-color: #cccccc;
+  font-size: 5vw;
+  border-radius: 15%;
+  color: rgb(255, 0, 0);
+}
+
+.nut:active {
+  background-color: #3e8e41;
+}
 
 
 
-  /* Toast */
+/* Toast */
 
 #snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 10px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  bottom: 30px;
-  /* hhh */
-  left: 50%;
-  transform: translate(-50%, -50%);
+visibility: hidden;
+min-width: 250px;
+background-color: #333;
+color: #fff;
+text-align: center;
+border-radius: 10px;
+padding: 16px;
+position: fixed;
+z-index: 1;
+bottom: 30px;
+/* hhh */
+left: 50%;
+transform: translate(-50%, -50%);
 }
 
 #snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+visibility: visible;
+-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
 @-webkit-keyframes fadein {

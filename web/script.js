@@ -1,10 +1,12 @@
-console.log("esp 8266");
-
-
-
+console.log("XEEM");
 
 var socket = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
 
+function log(nd) {
+  const l=document.getElementById("log")
+  l.value += "> " + nd + "\r\n";
+  l.scrollTop = l.scrollHeight;
+}
 
 var socket;
 try {
@@ -30,6 +32,7 @@ socket.addEventListener("close", (event) => {
 });
 
 
+
 const handleSend = (nd) => {
   console.log('Dang gui: ' + nd);
   if (socket.readyState === WebSocket.OPEN) {
@@ -50,21 +53,11 @@ const send = (nd) => {
   }
 }
 
-
-function bat() {
-  document.getElementById('tat').style.display = 'none';
-  document.getElementById('bat').style.display = 'block';
-  lock();
-  send("B");
-
-}
-
 function tat() {
   document.getElementById('bat').style.display = 'none';
   document.getElementById('tat').style.display = 'block';
   unlock();
   send("T");
-
 }
 
 function lock() {
@@ -97,18 +90,6 @@ function khoiTao() {
   tat();
 }
 khoiTao();
-
-function ga() {
-  Toast("G")
-  send("G");
-}
-
-function phanh() {
-  Toast("P")
-  send("P");
-}
-
-
 
 
 const Toast = (nd) => {
@@ -150,6 +131,9 @@ function vt(e) {
     const touch = touches[0] ?? changedTouches[0];
     X = touch.pageX;
     Y = touch.pageY;
+    log("touches "+touches.length);
+    log("changedTouches "+changedTouches.length);
+
   } else if (e.type.includes(`mouse`)) {
     X = e.clientX;
     Y = e.clientY;
@@ -160,8 +144,6 @@ function vt(e) {
     y: Y
   }
 }
-
-
 
 
 function startVoLang(e) {
@@ -208,3 +190,52 @@ voLang.addEventListener("touchmove", (e) => {
 voLang.addEventListener("mousemove", (e) => {
   moveVolang(e);
 })
+
+
+
+
+document.getElementById('btn-bat').addEventListener('click', () => {
+  document.getElementById('tat').style.display = 'none';
+  document.getElementById('bat').style.display = 'block';
+  lock();
+  send("B");
+})
+
+document.getElementById('btn-tat').addEventListener('click', () => {
+  document.getElementById('bat').style.display = 'none';
+  document.getElementById('tat').style.display = 'block';
+  unlock();
+  send("T");
+})
+
+
+document.getElementById('chan-ga').addEventListener('click', () => {
+  send("G");
+  log("g")
+})
+
+document.getElementById('chan-phanh').addEventListener('click', () => {
+  Toast("P")
+  send("P");
+})
+
+
+document.getElementById('btn-p').addEventListener('click', (e) => {
+  e.preventDefault();
+})
+
+
+
+// function move() {
+//   var elem = document.getElementById("myBar");
+//   var height = 1;
+//   var id = setInterval(frame, 10);
+//   function frame() {
+//     if (height >= 100) {
+//       clearInterval(id);
+//     } else {
+//       height++;
+//       elem.style.height = height + '%';
+//     }
+//   }
+// }

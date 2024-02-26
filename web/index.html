@@ -7,28 +7,9 @@
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
   <link rel="stylesheet" href="style.css">
 
-
-
   <style>
     body {
       background-color: #54C9FD;
-    }
-
-    .fix {
-      width: 10vw;
-      height: 10vw;
-      position: fixed;
-    }
-
-    .nut {
-      background-color: #cccccc;
-      font-size: 5vw;
-      border-radius: 15%;
-      color: rgb(255, 0, 0);
-    }
-
-    .nut:active {
-      background-color: #3e8e41;
     }
   </style>
 
@@ -40,7 +21,7 @@
   <div id="snackbar">...</div>
 
   <div id="tat">
-    <button style="left:40vw;top:7vw;width:20vw;height:20vw;" class="nut fix" onclick="bat()">
+    <button id="btn-bat" style="left:40vw;top:7vw;width:20vw;height:20vw;" class="nut fix">
       <svg height="15vw" width="15vw" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
         <g>
@@ -58,7 +39,7 @@
 
 
   <div id="bat">
-    <button style="left:50vw;top:0vw;" class="nut fix">P</button>
+    <button id="btn-p" style="left:50vw;top:0vw;" class="nut fix">P</button>
     <button style="left:50vw;top:10vw;" class="nut fix">R</button>
     <button style="left:50vw;top:20vw;" class="nut fix">N</button>
     <button style="left:50vw;top:30vw;" class="nut fix">D</button>
@@ -275,9 +256,8 @@
 
     ">
 
-      <svg  height="30vw" width="30vw" version="1.1" id="Layer_1"
-        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
-        xml:space="preserve">
+      <svg height="30vw" width="30vw" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
         <g transform="translate(1 1)">
           <path style="fill:#FFDD09;"
             d="M428.227,346.307c-22.187-5.973-39.253-25.6-39.253-50.347c0-28.16,23.04-40.96,51.2-40.96
@@ -320,10 +300,10 @@
   s68.267-15.36,68.267-25.6C323.267,270.36,296.813,255,255,255z" />
         </g>
       </svg>
- 
 
 
-      
+
+
     </div>
 
     <!-- pin -->
@@ -366,12 +346,11 @@
     </div>
 
     <!-- chan ga -->
-    <button ontouchstart="ga()" onclick="ga()" class="fix nut"
-      style="left:81vw;top:15vw;height:30vw ;width:9vw ;border-radius: 3vw"></button>
+    <button id="chan-ga" class="fix nut" style="left:81vw;top:15vw;height:30vw ;width:9vw ;border-radius: 3vw"></button>
 
 
     <!-- chan phanh -->
-    <button ontouchstart="phanh()" onclick="phanh()" class="fix nut"
+    <button id="chan-phanh" class="fix nut"
       style="left:68vw;top:29vw;height:16vw ;width:9vw ;border-radius: 3vw"></button>
 
 
@@ -383,7 +362,7 @@
 
 
     <!-- nut tat -->
-    <button class="fix nut" style="left:73vw;top:0.9vw;height:7vw ;width:7vw" onclick="tat()">
+    <button id="btn-tat" class="fix nut" style="left:73vw;top:0.9vw;height:7vw ;width:7vw">
       <svg height="4vw" width="4vw" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
         <g>
@@ -400,10 +379,12 @@
 
   </div>
 
-
-
+  <textarea id="log" style="font-size: 1vw; outline: none;border: none;background-color: #614d4d42; left:61vw;top:8vw; width: 19vw;
+  height: 20vw;
+  position: fixed;" rows="10" cols="33"></textarea>
 
   <script src="script.js" type="text/javascript"></script>
+
 </body>
 
 </html>
