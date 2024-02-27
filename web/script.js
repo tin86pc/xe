@@ -1,9 +1,11 @@
 console.log("XEEM");
 
+
+
 var socket = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
 
 function log(nd) {
-  const l=document.getElementById("log")
+  const l = document.getElementById("log")
   l.value += "> " + nd + "\r\n";
   l.scrollTop = l.scrollHeight;
 }
@@ -87,7 +89,13 @@ function unlock() {
 }
 
 function khoiTao() {
-  tat();
+  if (localStorage.reset) {
+    localStorage.reset = false;
+    bat();
+  } else {
+    tat();
+  }
+  
 }
 khoiTao();
 
@@ -119,6 +127,8 @@ function LayTam() {
   return {
     x: tam.left + tam.width / 2,
     y: tam.top + tam.height / 2,
+    w: tam.width / 2,
+    h: tam.height / 2
   };
 }
 
@@ -127,12 +137,35 @@ function vt(e) {
   let Y = 0;
 
   if (e.type.includes(`touch`)) {
-    const { touches, changedTouches } = e.originalEvent ?? e;
-    const touch = touches[0] ?? changedTouches[0];
+    let { touches, changedTouches } = e.originalEvent ?? e;
+    let touch = touches[0] ?? changedTouches[0];
     X = touch.pageX;
     Y = touch.pageY;
-    log("touches "+touches.length);
-    log("changedTouches "+changedTouches.length);
+
+
+    if (touches.length > 1) {
+
+      for (let i = 0; i < touches.length; i++) {
+        touch = touches[i] ?? changedTouches[i];
+        log(i)
+        // log(touch.X);
+        // log(touch.Y);
+
+        // const tam = LayTam();
+        // if (Math.abs(tam.x - t.pageX) < tam.w && Math.abs(tam.y - t.pageY) < tam.h) {
+
+        //   X = touch.pageX;
+        //   Y = touch.pageY;
+        // }
+      }
+    }
+
+
+
+
+
+    // log("touches " + touches.length);
+    // log("changedTouches " + changedTouches.length);
 
   } else if (e.type.includes(`mouse`)) {
     X = e.clientX;
@@ -191,21 +224,23 @@ voLang.addEventListener("mousemove", (e) => {
   moveVolang(e);
 })
 
-
-
-
-document.getElementById('btn-bat').addEventListener('click', () => {
+function bat() {
   document.getElementById('tat').style.display = 'none';
   document.getElementById('bat').style.display = 'block';
   lock();
   send("B");
+}
+
+
+
+document.getElementById('btn-bat').addEventListener('click', () => {
+  bat();
+  localStorage.reset = false;
 })
 
 document.getElementById('btn-tat').addEventListener('click', () => {
-  document.getElementById('bat').style.display = 'none';
-  document.getElementById('tat').style.display = 'block';
-  unlock();
-  send("T");
+  tat();
+  localStorage.reset = false;
 })
 
 
@@ -215,13 +250,18 @@ document.getElementById('chan-ga').addEventListener('click', () => {
 })
 
 document.getElementById('chan-phanh').addEventListener('click', () => {
-  Toast("P")
+  log("p")
   send("P");
 })
 
 
 document.getElementById('btn-p').addEventListener('click', (e) => {
   e.preventDefault();
+})
+
+document.getElementById('btn-reset').addEventListener('click', (e) => {
+  localStorage.reset = true;
+  location.reload();
 })
 
 
