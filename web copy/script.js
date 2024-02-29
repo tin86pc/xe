@@ -73,3 +73,111 @@ function lock() {
   }
 }
 
+
+
+let anVoLang = false;
+let gocAn;
+let angle;
+let angleLuu = 0;
+let voLang = document.getElementById("vo-lang");
+
+function LayTam() {
+  let tam = voLang.getBoundingClientRect();
+  return {
+    x: tam.left + tam.width / 2,
+    y: tam.top + tam.height / 2,
+    w: tam.width / 2,
+    h: tam.height / 2
+  };
+}
+
+function vt(e) {
+  let X = 0;
+  let Y = 0;
+
+  if (e.type.includes(`touch`)) {
+    let { touches, changedTouches } = e.originalEvent ?? e;
+    let touch = touches[0] ?? changedTouches[0];
+    X = touch.pageX;
+    Y = touch.pageY;
+
+    if (touches.length > 1) {
+
+      for (let i = 0; i < touches.length; i++) {
+        touch = touches[i] ?? changedTouches[i];
+        log(i)
+        // log(touch.X);
+        // log(touch.Y);
+
+        // const tam = LayTam();
+        // if (Math.abs(tam.x - t.pageX) < tam.w && Math.abs(tam.y - t.pageY) < tam.h) {
+
+        //   X = touch.pageX;
+        //   Y = touch.pageY;
+        // }
+      }
+    }
+
+
+
+
+
+    // log("touches " + touches.length);
+    // log("changedTouches " + changedTouches.length);
+
+  } else if (e.type.includes(`mouse`)) {
+    X = e.clientX;
+    Y = e.clientY;
+  }
+
+  return {
+    x: X,
+    y: Y
+  }
+}
+
+
+function startVoLang(e) {
+  anVoLang = true;
+  gocAn = Math.atan2(vt(e).x - LayTam().x, -(vt(e).y - LayTam().y)) * (180 / Math.PI);
+}
+
+function upVolang() {
+  anVoLang = false;
+  angleLuu = angle;
+}
+
+function moveVolang(e) {
+  if (anVoLang) {
+    angle = (Math.atan2(vt(e).x - LayTam().x, -(vt(e).y - LayTam().y))) * (180 / Math.PI) - gocAn + angleLuu;
+    voLang.style.transform = `rotate(${angle}deg)`;
+    document.getElementById("td").innerText = angle.toFixed(2);
+  }
+}
+
+
+// "touchstart" "mousedown"
+voLang.addEventListener("touchstart", (e) => {
+  startVoLang(e);
+});
+voLang.addEventListener("mousedown", (e) => {
+  startVoLang(e);
+});
+
+
+//"touchend" "mouseup"
+voLang.addEventListener("touchend", function () {
+  upVolang();
+});
+voLang.addEventListener("mouseup", function () {
+  upVolang();
+});
+
+
+//"touchmove" "mousemove"
+voLang.addEventListener("touchmove", (e) => {
+  moveVolang(e);
+})
+voLang.addEventListener("mousemove", (e) => {
+  moveVolang(e);
+})

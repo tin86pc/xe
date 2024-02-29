@@ -48,6 +48,17 @@
   width: 20%;
   height: 30%;
 }
+#vo-lang{
+  position: fixed; 
+  left: 2.5%;
+  top: 24%;
+  background-color: #d8080821;
+
+  width: 35%;
+  height: 70%;
+  border-radius: 50%;
+}
+
 
 textarea{
   z-index: -1;
