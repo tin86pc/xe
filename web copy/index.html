@@ -75,7 +75,7 @@
 
 
         <!-- Còi -->
-        <button style="left:40%;top:0%;" class="fix btn cg">
+        <button onclick="an_nut('coi')" style="left:40%;top:0%;" class="fix btn cg">
             <svg height="80%" width="80%" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 423.339 423.339" xml:space="preserve">
                 <g>
@@ -117,7 +117,7 @@
         </button>
 
         <!-- Đèn xa -->
-        <button style="left:40%;top:20%;" class="fix btn cg">
+        <button onclick="an_nut('xa')" style="left:40%;top:20%;" class="fix btn cg">
             <svg height="80%" width="80%" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 504.446 504.446" xml:space="preserve">
                 <g transform="translate(1 1)">
@@ -156,7 +156,7 @@
         </button>
 
         <!-- Đèn gần -->
-        <button style="left:40%;top:40%;" class="fix btn cg">
+        <button onclick="an_nut('gan')" style="left:40%;top:40%;" class="fix btn cg">
             <svg height="80%" width="80%" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.168 512.168" xml:space="preserve">
                 <g transform="translate(1)">
@@ -197,7 +197,7 @@
         </button>
 
         <!-- nguy hiem -->
-        <button style="left:40%;top:60%;" class="fix btn cg">
+        <button onclick="an_nut('nguy hiem')" style="left:40%;top:60%;" class="fix btn cg">
             <svg height="65%" width="65%" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.559 512.559" xml:space="preserve">
                 <g transform="translate(1 1)">
@@ -212,7 +212,7 @@
         </button>
 
         <!-- re trai -->
-        <button style="left:0%;top:0%;" class="fix btn cg">
+        <button onclick="an_nut('trai')" style="left:0%;top:0%;" class="fix btn cg">
             <svg width="80%" height="80%" viewBox="-5 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink">
 
@@ -246,7 +246,7 @@
         </button>
 
         <!-- re phai -->
-        <button style="left:30%;top:0%;" class="fix btn cg">
+        <button onclick="an_nut('phai')" style="left:30%;top:0%;" class="fix btn cg">
             <svg width="80%" height="80%" viewBox="-5 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>right</title>
@@ -326,7 +326,14 @@
 
 
         <!-- Chan ga -->
-        <button class="btn fix" style="left:81%;top:25%;height:60% ;width:9% ;border-radius: 1.5rem"></button>
+        <div id="chan-ga" class="cg">
+            <div id="chan-ga2"
+                style="position: absolute; left:25%;top:0;height:50% ;width:50% ;border: 0.2rem solid rgb(0, 0, 0);border-radius: 1.5rem; background: #b81b1b;">
+            </div>
+        </div>
+
+
+
 
         <!-- chan phanh -->
         <button class="btn fix" style="left:68%;top:60%;height:25% ;width:9% ;border-radius: 1.5rem"></button>

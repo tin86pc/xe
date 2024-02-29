@@ -86,6 +86,7 @@ function LayTam() {
   return {
     x: tam.left + tam.width / 2,
     y: tam.top + tam.height / 2,
+
     w: tam.width / 2,
     h: tam.height / 2
   };
@@ -117,13 +118,6 @@ function vt(e) {
         // }
       }
     }
-
-
-
-
-
-    // log("touches " + touches.length);
-    // log("changedTouches " + changedTouches.length);
 
   } else if (e.type.includes(`mouse`)) {
     X = e.clientX;
@@ -180,4 +174,15 @@ voLang.addEventListener("touchmove", (e) => {
 })
 voLang.addEventListener("mousemove", (e) => {
   moveVolang(e);
+})
+
+
+const chanGa = document.getElementById('chan-ga');
+
+chanGa.addEventListener('mousemove', function (e) {
+  let vt = chanGa.getBoundingClientRect()
+  const tongcao = vt.bottom - vt.top
+  const cao = vt.bottom - e.clientY
+  let pt = (cao / tongcao) * 100
+  document.getElementById("chan-ga2").style.height = pt + '%';
 })
