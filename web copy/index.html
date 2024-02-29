@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" id="root">
 
 <head>
     <title>XEEM</title>
@@ -13,6 +13,7 @@
 
 <body>
     <div id="main" class="tam">
+
         <button onclick="an_nut('P')" class="fix btn cg" style="left:50%;top:0%;">
             <svg height="80%" width="80%" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
@@ -197,7 +198,7 @@
 
         <!-- nguy hiem -->
         <button style="left:40%;top:60%;" class="fix btn cg">
-            <svg height="80%" width="80%" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+            <svg height="65%" width="65%" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.559 512.559" xml:space="preserve">
                 <g transform="translate(1 1)">
                     <polygon style="fill:#FFDD09;" points="255.427,7.919 502.893,502.853 7.96,502.853 	" />
@@ -335,11 +336,12 @@
 
 
         <!-- Chan ga -->
-        <button id="chan-ga" class="btn fix" style="left:81%;top:25%;height:60% ;width:9% ;border-radius: 1em"></button>
+        <button id="chan-ga" class="btn fix"
+            style="left:81%;top:25%;height:60% ;width:9% ;border-radius: 1.5rem"></button>
 
         <!-- chan phanh -->
         <button id="chan-phanh" class="btn fix"
-            style="left:68%;top:60%;height:25% ;width:9% ;border-radius: 10%"></button>
+            style="left:68%;top:60%;height:25% ;width:9% ;border-radius: 1.5rem"></button>
 
         <!-- nut reset -->
         <button id="btn-reset" class="btn fix cg" style="left:65%;top:1.8%;height:14% ;width:7%">
@@ -402,7 +404,7 @@
         </button>
 
         <!-- full screen -->
-        <button id="btn-tat" class="btn fix cg" style="left:81%;top:1.8%;height:14% ;width:7%">
+        <button onclick="lock()" class="btn fix cg" style="left:81%;top:1.8%;height:14% ;width:7%">
             <svg height="90%" width="90%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -427,13 +429,13 @@
         </button>
 
         <!-- hien thi toc do -->
-        <div id="td"class="fix cg"
-            style="font-size: 2.5rem; background-color: #15A143; border-radius: 2vw;left: 10%;top: 0%; height: 20%; width: 20%; ">
+        <div id="td" class="fix cg"
+            style="font-size: 5rem; background-color: #15A143; border-radius: 1.5rem;left: 10%;top: 0%; height: 20%; width: 20%; ">
             0 km/h
         </div>
 
         <!-- ghi log -->
-        <textarea id="log" style=" font-size: 1rem;position: fixed;left:60%;top:20%;height: 40%; width: 20%;"
+        <textarea id="log" style=" font-size: 2rem;position: fixed;left:60rem;top:10rem;height: 40%; width: 20%;"
             readonly="readonly" unselectable="on"></textarea>
 
     </div>

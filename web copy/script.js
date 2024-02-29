@@ -21,10 +21,8 @@ function tinh() {
     main.style.height = ngang / 2 + "px";
   }
 
-  // sử dụng rem làm kích thước tham chiếu
-  var r = document.querySelector(':root');
-  r.style.setProperty('--ngang', main.style.width);
-  console.log(main.style.width);
+  // sử dụng rem làm kích thước tham chiếu cho
+  document.getElementById('root').style.fontSize = parseFloat(main.style.width) / 100 + "px";
 
 
 }
@@ -34,19 +32,44 @@ function khoitao() {
 khoitao();
 
 
-
-
-function tinhFontSize(e) {
-  const cao = e.getAttribute("cao");
-  e.style.fontSize = (e.clientHeight * cao) / 100 + "px";
-}
-
-
 window.addEventListener("resize", () => {
   tinh();
 });
 
+
 function an_nut(e) {
   log(e);
+}
+
+
+
+
+let khoa = false
+function lock() {
+  if (khoa == true) {
+    khoa = false
+    // (B1) UNLOCK FIRST
+    screen.orientation.unlock();
+
+    // (B2) THEN EXIT FULL SCREEN
+    if (document.fullscreenElement) { document.exitFullscreen(); }
+    else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+    else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
+    else if (document.msExitFullscreen) { document.msExitFullscreen(); }
+
+  } else {
+    khoa = true
+    // (A1) GO INTO FULL SCREEN FIRST
+    let de = document.documentElement;
+    if (de.requestFullscreen) { de.requestFullscreen(); }
+    else if (de.mozRequestFullScreen) { de.mozRequestFullScreen(); }
+    else if (de.webkitRequestFullscreen) { de.webkitRequestFullscreen(); }
+    else if (de.msRequestFullscreen) { de.msRequestFullscreen(); }
+
+    // (A2) THEN LOCK ORIENTATION
+    if (screen.orientation.type != 'landscape-primary') {
+      screen.orientation.lock("landscape");
+    }
+  }
 }
 
