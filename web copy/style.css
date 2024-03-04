@@ -62,6 +62,7 @@ textarea {
 }
 
 #chan-ga {
+  touch-action: manipulation;
   position: fixed;
   left: 81%;
   top: 25%;

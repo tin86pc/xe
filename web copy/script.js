@@ -149,40 +149,88 @@ function moveVolang(e) {
   }
 }
 
-
-// "touchstart" "mousedown"
-voLang.addEventListener("touchstart", (e) => {
-  startVoLang(e);
-});
+//mouse
 voLang.addEventListener("mousedown", (e) => {
   startVoLang(e);
 });
-
-
-//"touchend" "mouseup"
-voLang.addEventListener("touchend", function () {
+voLang.addEventListener("mouseup",  ()=> {
   upVolang();
 });
-voLang.addEventListener("mouseup", function () {
-  upVolang();
-});
-
-
-//"touchmove" "mousemove"
-voLang.addEventListener("touchmove", (e) => {
-  moveVolang(e);
-})
 voLang.addEventListener("mousemove", (e) => {
   moveVolang(e);
 })
 
+// touch
+voLang.addEventListener("touchstart", (e) => {
+  startVoLang(e);
+});
+voLang.addEventListener("touchend",  ()=> {
+  upVolang();
+});
+voLang.addEventListener("touchmove", (e) => {
+  moveVolang(e);
+})
+
+
+
+
 
 const chanGa = document.getElementById('chan-ga');
+let anChanGa = false
 
-chanGa.addEventListener('mousemove', function (e) {
+
+
+
+function tinhChanGa(e) {
   let vt = chanGa.getBoundingClientRect()
-  const tongcao = vt.bottom - vt.top
-  const cao = vt.bottom - e.clientY
-  let pt = (cao / tongcao) * 100
+  let pt = parseInt((e.offsetY / vt.height) * 100)
   document.getElementById("chan-ga2").style.height = pt + '%';
+  log(pt);
+
+}
+
+function startChanGa(e) {
+  anChanGa = true;
+  tinhChanGa(e);
+
+}
+
+function moveChanGa(e) {
+  if (anChanGa) {
+    tinhChanGa(e);
+  }
+}
+
+function upChanGa() {
+  anChanGa = false;
+}
+
+
+// mouse
+chanGa.addEventListener("mousedown", (e) => {
+  startChanGa(e);
+});
+chanGa.addEventListener("mousemove", (e) => {
+  moveChanGa(e);
+});
+chanGa.addEventListener("mouseup", (e) => {
+  upChanGa()
+});
+
+// touch
+chanGa.addEventListener("touchstart", (e) => {
+  startChanGa(e);
+});
+chanGa.addEventListener("touchmove", (e) => {
+  moveChanGa(e);
+});
+chanGa.addEventListener("touchend", (e) => {
+  upChanGa()
+});
+
+
+
+
+document.getElementById("chan-phanh").addEventListener("click", function () {
+  document.getElementById("chan-ga2").style.height = "0" + '%';
 })
