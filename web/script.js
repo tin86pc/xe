@@ -284,3 +284,68 @@ document.getElementById('btn-reset').addEventListener('click', (e) => {
 //     }
 //   }
 // }
+
+
+
+// https://www.kirupa.com/html5/introduction_to_easing_in_javascript.htm
+
+// ease-in
+function myMove() {
+  let id = null;
+  const elem = document.getElementById("animate");   
+  let pos = 0;
+  clearInterval(id);
+  id = setInterval(frame, 5);
+  function frame() {
+    if (pos == 350) {
+      clearInterval(id);
+    } else {
+      pos++; 
+      elem.style.top = pos + "px"; 
+      elem.style.left = pos + "px"; 
+    }
+  }
+}
+
+// bắt đầu nhanh kết thúc chậm
+var currentPos = -500;
+var incrementer = .01;
+ 
+function moveThing() {
+    incrementer += .0035;
+         
+    currentPos += (1 / incrementer);
+     
+    theThing.style.left = currentPos + "px";
+     
+    if (Math.abs(currentPos) >= 800) {
+        currentPos = -500;
+        incrementer = .01;
+    }
+     
+    requestAnimationFrame(moveThing);
+}
+moveThing();
+
+//Bắt đầu chậm kết thúc nhanh
+var currentPos = -500;
+var incrementer = .01;
+ 
+function moveThing() {
+    incrementer += 1;
+         
+    currentPos += Math.pow(1.05, incrementer);
+     
+    theThing.style.left = currentPos + "px";
+     
+    if (Math.abs(currentPos) >= 800) {
+        currentPos = -500;
+        incrementer = .01;
+    }
+     
+    requestAnimationFrame(moveThing);
+}
+moveThing();
+
+
+

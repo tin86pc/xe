@@ -5,6 +5,7 @@ function log(nd) {
   e.scrollTop = e.scrollHeight;
 }
 
+
 function tinh() {
   let ngang = window.innerWidth;
   let doc = window.innerHeight;
@@ -23,14 +24,34 @@ function tinh() {
 
   // sử dụng rem làm kích thước tham chiếu cho
   document.getElementById('root').style.fontSize = parseFloat(main.style.width) / 100 + "px";
-
-
 }
+
 function khoitao() {
   tinh();
+
+  const aid = ['nut-P', 'nut-R', 'nut-N', 'nut-D', 'nut-coi', 'nut-den-xa', 'nut-den-gan', 'nut-nguy-hiem', 'nut-trai', 'nut-phai'];
+
+  for (let i = 0; i < aid.length; i++) {
+    document.getElementById(aid[i]).addEventListener("mousedown", (e) => {
+      e['nd'] = "L" + i;
+      anNut(e);
+    });
+    document.getElementById(aid[i]).addEventListener("touchstart", (e) => {
+      e['nd'] = "l" + i;
+      anNut(e);
+    });
+  }
+
 }
+
+
+
 khoitao();
 
+function anNut(e) {
+  e.preventDefault();
+  log(e.nd)
+}
 
 window.addEventListener("resize", () => {
   tinh();
@@ -105,17 +126,19 @@ function vt(e) {
     if (touches.length > 1) {
 
       for (let i = 0; i < touches.length; i++) {
-        touch = touches[i] ?? changedTouches[i];
-        log(i)
-        // log(touch.X);
-        // log(touch.Y);
+        if (e.touches[i].target.id == e.target.id) {
+          touch = touches[i] ?? changedTouches[i];
+          // X = e.touches[i].clientX
+          // Y = e.touches[i].clientY
 
-        // const tam = LayTam();
-        // if (Math.abs(tam.x - t.pageX) < tam.w && Math.abs(tam.y - t.pageY) < tam.h) {
+          // X = touch.X
+          // Y = touch.Y
 
-        //   X = touch.pageX;
-        //   Y = touch.pageY;
-        // }
+          X = touch.pageX;
+          Y = touch.pageY;
+
+
+        }
       }
     }
 
@@ -153,7 +176,7 @@ function moveVolang(e) {
 voLang.addEventListener("mousedown", (e) => {
   startVoLang(e);
 });
-voLang.addEventListener("mouseup",  ()=> {
+voLang.addEventListener("mouseup", () => {
   upVolang();
 });
 voLang.addEventListener("mousemove", (e) => {
@@ -164,7 +187,7 @@ voLang.addEventListener("mousemove", (e) => {
 voLang.addEventListener("touchstart", (e) => {
   startVoLang(e);
 });
-voLang.addEventListener("touchend",  ()=> {
+voLang.addEventListener("touchend", () => {
   upVolang();
 });
 voLang.addEventListener("touchmove", (e) => {
@@ -179,20 +202,55 @@ const chanGa = document.getElementById('chan-ga');
 let anChanGa = false
 
 
-
-
 function tinhChanGa(e) {
-  let vt = chanGa.getBoundingClientRect()
-  let pt = parseInt((e.offsetY / vt.height) * 100)
-  document.getElementById("chan-ga2").style.height = pt + '%';
+
+  let vtt = chanGa.getBoundingClientRect()
+
+  let pt = 100 - parseInt(((vt(e).y - vtt.top) / vtt.height) * 100)
+
+  if (pt >= 100) {
+    pt = 100
+  }
+  if (pt < 0) {
+    pt = 0;
+  }
+
   log(pt);
+  ht(pt);
 
 }
+
+
+let gaInterval;
+let t = 0;
+function ht(pt) {
+  clearInterval(gaInterval)
+  gaInterval = setInterval(thayDoiChanGa, 30, pt);
+}
+
+function thayDoiChanGa(pt) {
+
+  console.log(t);
+  console.log("pt"+pt);
+  document.getElementById("chan-ga2").style.height = t + '%';
+
+  const ds = 1;
+  if (t > pt) {
+    t = t - ds
+  }
+  if (t < pt) {
+    t = t + ds
+  }
+  if (Math.abs(t - pt) <= ds) {
+    clearInterval(gaInterval)
+    gaInterval = null;
+  }
+}
+
 
 function startChanGa(e) {
   anChanGa = true;
   tinhChanGa(e);
-
 }
 
 function moveChanGa(e) {
@@ -203,6 +261,7 @@ function moveChanGa(e) {
 
 function upChanGa() {
   anChanGa = false;
+  ht(0);
 }
 
 
@@ -216,6 +275,7 @@ chanGa.addEventListener("mousemove", (e) => {
 chanGa.addEventListener("mouseup", (e) => {
   upChanGa()
 });
+
 
 // touch
 chanGa.addEventListener("touchstart", (e) => {
@@ -231,6 +291,22 @@ chanGa.addEventListener("touchend", (e) => {
 
 
 
-document.getElementById("chan-phanh").addEventListener("click", function () {
+
+
+
+
+function phanh() {
+  t = 0;
+  clearInterval(gaInterval);
   document.getElementById("chan-ga2").style.height = "0" + '%';
+}
+const chanPhanh = document.getElementById("chan-phanh")
+chanPhanh.addEventListener("touchstart", function () {
+  phanh();
 })
+
+chanPhanh.addEventListener("mousedown", function () {
+  phanh();
+})
+
+
