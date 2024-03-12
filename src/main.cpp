@@ -16,12 +16,13 @@ void startWifi()
 {
   WiFi.mode(WIFI_AP_STA);
   WiFi.softAP("abc", "12345678");
-  // WiFi.begin("Tuyen T1", "0978333563");
-  WiFi.begin("Mercusys", "mot2345678");
+  WiFi.begin("Tuyen T1", "0978333563");
+  // WiFi.begin("Mercusys", "mot2345678");
   while (WiFi.waitForConnectResult() != WL_CONNECTED)
   {
     delay(100);
   }
+
   u.setup(&sv); // nạp chương trình qua wifi
   Serial.println("Ket noi wifi: Tuyen T1 dia chi IP");
   Serial.println(WiFi.localIP());
@@ -46,10 +47,8 @@ void startServer()
 
   // Tạo form nhận file
   sv.on(
-      "/cap-nhat-html", HTTP_ANY,
-      []()
-      {
-          Serial.println("cap-nhat-html");
+      "/s", HTTP_ANY, []()
+      {   Serial.println("s");
           sv.send(200, "text/html", 
           "<html>"
             "<head>"
@@ -63,7 +62,7 @@ void startServer()
             "<br>"
             "<a href='/update'>Update Firmware</a>"
             "<br>"
-              "<form method='POST' action='/cap-nhat-html' enctype='multipart/form-data'>"
+              "<form method='POST' action='/s' enctype='multipart/form-data'>"
                 "<input type='file' name='chon file'>"
                 "<input type='submit' value='Gửi đi'>"
               "</form>"
@@ -89,19 +88,32 @@ void startServer()
         }
       });
 
+  sv.onNotFound([]()
+                {
+                  Serial.println("-----------");
+                  String uri = sv.uri();
+                  String nf = uri.substring(1);
+                  int vt = nf.indexOf(".");
+                  String lf = "";
+                  if (vt >= 0)
+                  {
+                    lf = nf.substring(vt, nf.length());
+                    Serial.println(lf);
+                  }
+
+                  Serial.println(nf);
+                  Serial.println("-----------");
+                  if (lf == ".js")
+                  {
+                    sv.send(200, "application/javascript", getData(nf));
+                  }
+                  else
+                  {
+                    sv.send(404,"text/html","Error 404 NOT FOUND");
+                  }
+                });
+
   sv.begin();
-}
-
-#include <ESP8266mDNS.h>
-
-void startMDNS()
-{       
-  const char *mdnsName = "abc"; // Domain name for the mDNS responder
-  
-  MDNS.begin(mdnsName); // start the multicast domain name server
-  Serial.print("mDNS responder started: http://");
-  Serial.print(mdnsName);
-  Serial.println(".local");
 }
 
 bool chay = false;
@@ -174,7 +186,6 @@ void led()
   webSocket.broadcastTXT("."); // send data to all connected clients
 }
 
-
 void setup()
 {
   Serial.begin(115200);
@@ -183,7 +194,6 @@ void setup()
   startWifi();
   startSPIFFS();
   startWebSocket();
-  startMDNS();
   startServer();
 }
 
@@ -193,5 +203,4 @@ void loop()
   sv.handleClient();
 
   nhay(1000, led);
-
 }

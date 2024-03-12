@@ -2,95 +2,88 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  
-  -webkit-user-select: none;
-  -ms-user-select: none; 
-  user-select: none; 
+}
+
+.tam {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .fix {
-  width: 10vw;
-  height: 10vw;
+  width: 10rem;
+  height: 10rem;
   position: fixed;
 }
 
-.nut {
+.btn {
   background-color: #cccccc;
-  font-size: 5vw;
-  border-radius: 15%;
-  color: rgb(255, 0, 0);
+  border-radius: 1.5rem;
 }
 
-.nut:active {
+.btn:active {
   background-color: #3e8e41;
 }
 
 
-
-/* Toast */
-
-#snackbar {
-visibility: hidden;
-min-width: 250px;
-background-color: #333;
-color: #fff;
-text-align: center;
-border-radius: 10px;
-padding: 16px;
-position: fixed;
-z-index: 1;
-bottom: 30px;
-/* hhh */
-left: 50%;
-transform: translate(-50%, -50%);
+/*-----------*/
+#main {
+  border: 2px solid red;
+  background-color: aqua;
 }
 
-#snackbar.show {
-visibility: visible;
--webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+#log {
+  font-size: 1em;
+  outline: none;
+  border: none;
+  background-color: #614d4d42;
+  width: 20%;
+  height: 30%;
 }
 
-@-webkit-keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 30px;
-    opacity: 1;
-  }
+#vo-lang {
+  position: fixed;
+  left: 2.5%;
+  top: 24%;
+  background-color: #d8080821;
+
+  width: 35%;
+  height: 70%;
+  border-radius: 50%;
 }
 
-@keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 30px;
-    opacity: 1;
-  }
+textarea {
+  z-index: -1;
 }
 
-@-webkit-keyframes fadeout {
-  from {
-    bottom: 30px;
-    opacity: 1;
-  }
-  to {
-    bottom: 0;
-    opacity: 0;
-  }
+#chan-ga {
+  touch-action: manipulation;
+  position: fixed;
+  left: 81%;
+  top: 25%;
+  height: 60%;
+  width: 9%;
+  border: 0.2rem solid rgb(255, 5, 5);
+  border-radius: 1.5rem;
+  background: #cccccc;
+  transform: rotateZ(180deg);
 }
 
-@keyframes fadeout {
-  from {
-    bottom: 30px;
-    opacity: 1;
-  }
-  to {
-    bottom: 0;
-    opacity: 0;
-  }
+#chan-ga2 {
+  position: absolute;
+  left: 25%;
+  top: 0;
+  height: 0%;
+  width: 50%;
+  border: 0.2rem solid rgb(0, 0, 0);
+  border-radius: 1.5rem;
+  background: #b81b1b;
 }
+

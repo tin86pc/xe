@@ -1,124 +1,107 @@
+// "use strict";
+
+import { hi } from './xx.js';
+hi();
 
 
+// console.log(x); // Hello World
 
-
-
-console.log("XEEM");
-
-
-
-var socket = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
 
 function log(nd) {
-  const l = document.getElementById("log")
-  l.value += "> " + nd + "\r\n";
-  l.scrollTop = l.scrollHeight;
+  const e = document.getElementById("log")
+  e.value += "> " + nd + "\r\n";
+  e.scrollTop = e.scrollHeight;
 }
 
-var socket;
-try {
-  socket = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
-} catch (error) {
-  console.log("fghfg");
-}
 
-socket.addEventListener("message", (event) => {
-  console.log("Message from esp ", event.data);
-});
+function tinh() {
+  let ngang = window.innerWidth;
+  let doc = window.innerHeight;
 
-socket.addEventListener("open", (event) => {
-  console.log('WebSocket Connect');
-});
+  const main = document.getElementById("main");
 
-socket.addEventListener("error", (event) => {
-  console.log("WebSocket error: ", event);
-});
-
-socket.addEventListener("close", (event) => {
-  console.log("WebSocket close");
-});
-
-
-
-const handleSend = (nd) => {
-  console.log('Dang gui: ' + nd);
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.send(nd)
-  } else {
-    setTimeout(() => {
-      handleSend(nd)
-    }, 1000)
+  if (ngang > doc * 2) {
+    main.style.width = doc * 2 + "px";
+    main.style.height = doc + "px";
   }
-};
+  if (doc * 2 >= ngang) {
 
-
-const send = (nd) => {
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.send(nd)
-  } else {
-    console.log('chua ket noi');
+    main.style.width = ngang + "px";
+    main.style.height = ngang / 2 + "px";
   }
+
+  // sử dụng rem làm kích thước tham chiếu cho
+  document.getElementById('root').style.fontSize = parseFloat(main.style.width) / 100 + "px";
 }
 
-function tat() {
-  document.getElementById('bat').style.display = 'none';
-  document.getElementById('tat').style.display = 'block';
-  unlock();
-  send("T");
+function khoitao() {
+  tinh();
+
+  const aid = ['nut-P', 'nut-R', 'nut-N', 'nut-D', 'nut-coi', 'nut-den-xa', 'nut-den-gan', 'nut-nguy-hiem', 'nut-trai', 'nut-phai'];
+
+  for (let i = 0; i < aid.length; i++) {
+    document.getElementById(aid[i]).addEventListener("mousedown", (e) => {
+      e['nd'] = "L" + i;
+      anNut(e);
+    });
+    document.getElementById(aid[i]).addEventListener("touchstart", (e) => {
+      e['nd'] = "l" + i;
+      anNut(e);
+    });
+  }
+
 }
 
+
+
+khoitao();
+
+function anNut(e) {
+  e.preventDefault();
+  log(e.nd)
+}
+
+window.addEventListener("resize", () => {
+  tinh();
+});
+
+
+function an_nut(e) {
+  log(e);
+}
+
+
+
+
+let khoa = false
 function lock() {
-  // (A1) GO INTO FULL SCREEN FIRST
-  let de = document.documentElement;
-  if (de.requestFullscreen) { de.requestFullscreen(); }
-  else if (de.mozRequestFullScreen) { de.mozRequestFullScreen(); }
-  else if (de.webkitRequestFullscreen) { de.webkitRequestFullscreen(); }
-  else if (de.msRequestFullscreen) { de.msRequestFullscreen(); }
+  if (khoa == true) {
+    khoa = false
+    // (B1) UNLOCK FIRST
+    screen.orientation.unlock();
 
-  // (A2) THEN LOCK ORIENTATION
-  if (screen.orientation.type != 'landscape-primary') {
-    screen.orientation.lock("landscape");
-  }
+    // (B2) THEN EXIT FULL SCREEN
+    if (document.fullscreenElement) { document.exitFullscreen(); }
+    else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+    else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
+    else if (document.msExitFullscreen) { document.msExitFullscreen(); }
 
-}
-
-function unlock() {
-  // (B1) UNLOCK FIRST
-  screen.orientation.unlock();
-
-  // (B2) THEN EXIT FULL SCREEN
-  if (document.fullscreenElement) { document.exitFullscreen(); }
-  else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
-  else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
-  else if (document.msExitFullscreen) { document.msExitFullscreen(); }
-}
-
-function khoiTao() {
-  if (localStorage.reset) {
-    localStorage.reset = false;
-    bat();
   } else {
-    tat();
+    khoa = true
+    // (A1) GO INTO FULL SCREEN FIRST
+    let de = document.documentElement;
+    if (de.requestFullscreen) { de.requestFullscreen(); }
+    else if (de.mozRequestFullScreen) { de.mozRequestFullScreen(); }
+    else if (de.webkitRequestFullscreen) { de.webkitRequestFullscreen(); }
+    else if (de.msRequestFullscreen) { de.msRequestFullscreen(); }
+
+    // (A2) THEN LOCK ORIENTATION
+    if (screen.orientation.type != 'landscape-primary') {
+      screen.orientation.lock("landscape");
+    }
   }
-  
-}
-khoiTao();
-
-
-const Toast = (nd) => {
-  const x = document.getElementById("snackbar");
-  x.textContent = nd;
-  x.className = "show";
-
-  setTimeout(() => {
-    x.className = x.className.replace("show", "");
-  }, 3000);
 }
 
-
-const delay = time => new Promise(res => {
-  setTimeout(res, time)
-});
 
 
 let anVoLang = false;
@@ -132,6 +115,7 @@ function LayTam() {
   return {
     x: tam.left + tam.width / 2,
     y: tam.top + tam.height / 2,
+
     w: tam.width / 2,
     h: tam.height / 2
   };
@@ -147,30 +131,24 @@ function vt(e) {
     X = touch.pageX;
     Y = touch.pageY;
 
-
     if (touches.length > 1) {
 
       for (let i = 0; i < touches.length; i++) {
-        touch = touches[i] ?? changedTouches[i];
-        log(i)
-        // log(touch.X);
-        // log(touch.Y);
+        if (e.touches[i].target.id == e.target.id) {
+          touch = touches[i] ?? changedTouches[i];
+          // X = e.touches[i].clientX
+          // Y = e.touches[i].clientY
 
-        // const tam = LayTam();
-        // if (Math.abs(tam.x - t.pageX) < tam.w && Math.abs(tam.y - t.pageY) < tam.h) {
+          // X = touch.X
+          // Y = touch.Y
 
-        //   X = touch.pageX;
-        //   Y = touch.pageY;
-        // }
+          X = touch.pageX;
+          Y = touch.pageY;
+
+
+        }
       }
     }
-
-
-
-
-
-    // log("touches " + touches.length);
-    // log("changedTouches " + changedTouches.length);
 
   } else if (e.type.includes(`mouse`)) {
     X = e.clientX;
@@ -197,155 +175,146 @@ function upVolang() {
 function moveVolang(e) {
   if (anVoLang) {
     angle = (Math.atan2(vt(e).x - LayTam().x, -(vt(e).y - LayTam().y))) * (180 / Math.PI) - gocAn + angleLuu;
-    console.log(Math.atan2(vt(e).x - LayTam().x, -(vt(e).y - LayTam().y)));
     voLang.style.transform = `rotate(${angle}deg)`;
     document.getElementById("td").innerText = angle.toFixed(2);
   }
 }
 
-// "touchstart" "mousedown"
-voLang.addEventListener("touchstart", (e) => {
-  startVoLang(e);
-});
+//mouse
 voLang.addEventListener("mousedown", (e) => {
   startVoLang(e);
 });
-
-
-//"touchend" "mouseup"
-voLang.addEventListener("touchend", function () {
+voLang.addEventListener("mouseup", () => {
   upVolang();
 });
-voLang.addEventListener("mouseup", function () {
-  upVolang();
-});
-
-
-//"touchmove" "mousemove"
-voLang.addEventListener("touchmove", (e) => {
-  moveVolang(e);
-})
 voLang.addEventListener("mousemove", (e) => {
   moveVolang(e);
 })
 
-function bat() {
-  document.getElementById('tat').style.display = 'none';
-  document.getElementById('bat').style.display = 'block';
-  lock();
-  send("B");
+// touch
+voLang.addEventListener("touchstart", (e) => {
+  startVoLang(e);
+});
+voLang.addEventListener("touchend", () => {
+  upVolang();
+});
+voLang.addEventListener("touchmove", (e) => {
+  moveVolang(e);
+})
+
+
+
+
+
+const chanGa = document.getElementById('chan-ga');
+let anChanGa = false
+
+
+function tinhChanGa(e) {
+
+  let vtt = chanGa.getBoundingClientRect()
+
+  let pt = 100 - parseInt(((vt(e).y - vtt.top) / vtt.height) * 100)
+
+  if (pt >= 100) {
+    pt = 100
+  }
+  if (pt < 0) {
+    pt = 0;
+  }
+
+  log(pt);
+  ht(pt);
+
 }
 
 
+let gaInterval;
+let t = 0;
+function ht(pt) {
+  clearInterval(gaInterval)
+  gaInterval = setInterval(thayDoiChanGa, 30, pt);
+}
 
-document.getElementById('btn-bat').addEventListener('click', () => {
-  bat();
-  localStorage.reset = false;
-})
+function thayDoiChanGa(pt) {
 
-document.getElementById('btn-tat').addEventListener('click', () => {
-  tat();
-  localStorage.reset = false;
-})
+  console.log(t);
+  console.log("pt"+pt);
+  document.getElementById("chan-ga2").style.height = t + '%';
 
-
-document.getElementById('chan-ga').addEventListener('click', () => {
-  send("G");
-  log("g")
-})
-
-document.getElementById('chan-phanh').addEventListener('click', () => {
-  log("p")
-  send("P");
-})
-
-
-document.getElementById('btn-p').addEventListener('click', (e) => {
-  e.preventDefault();
-})
-
-document.getElementById('btn-reset').addEventListener('click', (e) => {
-  localStorage.reset = true;
-  location.reload();
-})
-
-
-
-// function move() {
-//   var elem = document.getElementById("myBar");
-//   var height = 1;
-//   var id = setInterval(frame, 10);
-//   function frame() {
-//     if (height >= 100) {
-//       clearInterval(id);
-//     } else {
-//       height++;
-//       elem.style.height = height + '%';
-//     }
-//   }
-// }
-
-
-
-// https://www.kirupa.com/html5/introduction_to_easing_in_javascript.htm
-
-// ease-in
-function myMove() {
-  let id = null;
-  const elem = document.getElementById("animate");   
-  let pos = 0;
-  clearInterval(id);
-  id = setInterval(frame, 5);
-  function frame() {
-    if (pos == 350) {
-      clearInterval(id);
-    } else {
-      pos++; 
-      elem.style.top = pos + "px"; 
-      elem.style.left = pos + "px"; 
-    }
+  const ds = 1;
+  if (t > pt) {
+    t = t - ds
+  }
+  if (t < pt) {
+    t = t + ds
+  }
+  if (Math.abs(t - pt) <= ds) {
+    clearInterval(gaInterval)
+    gaInterval = null;
   }
 }
 
-// bắt đầu nhanh kết thúc chậm
-var currentPos = -500;
-var incrementer = .01;
- 
-function moveThing() {
-    incrementer += .0035;
-         
-    currentPos += (1 / incrementer);
-     
-    theThing.style.left = currentPos + "px";
-     
-    if (Math.abs(currentPos) >= 800) {
-        currentPos = -500;
-        incrementer = .01;
-    }
-     
-    requestAnimationFrame(moveThing);
-}
-moveThing();
 
-//Bắt đầu chậm kết thúc nhanh
-var currentPos = -500;
-var incrementer = .01;
- 
-function moveThing() {
-    incrementer += 1;
-         
-    currentPos += Math.pow(1.05, incrementer);
-     
-    theThing.style.left = currentPos + "px";
-     
-    if (Math.abs(currentPos) >= 800) {
-        currentPos = -500;
-        incrementer = .01;
-    }
-     
-    requestAnimationFrame(moveThing);
+function startChanGa(e) {
+  anChanGa = true;
+  tinhChanGa(e);
 }
-moveThing();
 
+function moveChanGa(e) {
+  if (anChanGa) {
+    tinhChanGa(e);
+  }
+}
+
+function upChanGa() {
+  anChanGa = false;
+  ht(0);
+}
+
+
+// mouse
+chanGa.addEventListener("mousedown", (e) => {
+  startChanGa(e);
+});
+chanGa.addEventListener("mousemove", (e) => {
+  moveChanGa(e);
+});
+chanGa.addEventListener("mouseup", (e) => {
+  upChanGa()
+});
+
+
+// touch
+chanGa.addEventListener("touchstart", (e) => {
+  startChanGa(e);
+});
+chanGa.addEventListener("touchmove", (e) => {
+  moveChanGa(e);
+});
+chanGa.addEventListener("touchend", (e) => {
+  upChanGa()
+});
+
+
+
+
+
+
+
+
+function phanh() {
+  t = 0;
+  clearInterval(gaInterval);
+  document.getElementById("chan-ga2").style.height = "0" + '%';
+}
+const chanPhanh = document.getElementById("chan-phanh")
+chanPhanh.addEventListener("touchstart", function () {
+  phanh();
+})
+
+chanPhanh.addEventListener("mousedown", function () {
+  phanh();
+})
 
 
