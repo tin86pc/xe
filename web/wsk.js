@@ -1,5 +1,4 @@
-
-  
+ 
   var socket;
   try {
     socket = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);

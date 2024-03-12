@@ -1,10 +1,4 @@
-// "use strict";
-
-import { hi } from './xx.js';
-hi();
-
-
-// console.log(x); // Hello World
+"use strict";
 
 
 function log(nd) {
