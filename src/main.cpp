@@ -45,6 +45,12 @@ void startServer()
           Serial.println("style.css");
           sv.send(200, "text/css", getData("style.css") ); });
 
+  sv.on("/x", []()
+        {
+          Serial.println("Format...");
+          SPIFFS.format();
+          sv.send(200,"text/html","Format ok."); });
+
   // Tạo form nhận file
   sv.on(
       "/s", HTTP_ANY, []()
@@ -58,10 +64,16 @@ void startServer()
               "</title>"
             "</head>"
             "<body>"
-            "<a href='/'>Trang chủ</a>"
-            "<br>"
-            "<a href='/update'>Update Firmware</a>"
-            "<br>"
+              "<br>"
+              "<a href='/'>Trang chủ</a>"
+              "<br>"
+              "<br>"
+              "<a href='/update'>Update Firmware</a>"
+              "<br>"
+              "<br>"
+              "<a href='/x'>Format</a>"
+              "<br>"
+              "<br>"
               "<form method='POST' action='/s' enctype='multipart/form-data'>"
                 "<input type='file' name='chon file'>"
                 "<input type='submit' value='Gửi đi'>"
@@ -90,19 +102,14 @@ void startServer()
 
   sv.onNotFound([]()
                 {
-                  Serial.println("-----------");
                   String uri = sv.uri();
                   String nf = uri.substring(1);
+                  String lf = "";                
                   int vt = nf.indexOf(".");
-                  String lf = "";
                   if (vt >= 0)
                   {
                     lf = nf.substring(vt, nf.length());
-                    Serial.println(lf);
                   }
-
-                  Serial.println(nf);
-                  Serial.println("-----------");
                   if (lf == ".js")
                   {
                     sv.send(200, "application/javascript", getData(nf));
@@ -110,8 +117,7 @@ void startServer()
                   else
                   {
                     sv.send(404,"text/html","Error 404 NOT FOUND");
-                  }
-                });
+                  } });
 
   sv.begin();
 }

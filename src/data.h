@@ -1,12 +1,12 @@
 #include <FS.h>
 
-void startSPIFFS(){
-if (!SPIFFS.begin())
-  {
-    Serial.println("An Error has occurred while mounting SPIFFS");
-    return;
-  }
-
+void startSPIFFS()
+{
+    if (!SPIFFS.begin())
+    {
+        Serial.println("An Error has occurred while mounting SPIFFS");
+        return;
+    }
 }
 
 bool clearData(String filename)
@@ -56,6 +56,8 @@ String getData(String filename)
 
     return ret;
 }
+
+
 
 // ;board_build.filesystem = littlefs
 // #include <LittleFS.h>

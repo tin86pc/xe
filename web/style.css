@@ -86,4 +86,8 @@ textarea {
   border-radius: 1.5rem;
   background: #b81b1b;
 }
-
+.kc{
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
