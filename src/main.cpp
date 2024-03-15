@@ -51,10 +51,14 @@ void startServer()
           SPIFFS.format();
           sv.send(200,"text/html","Format ok."); });
 
+  sv.on("/s", []()
+        { sv.send(200, "text/html", "setting"); });
+
   // Tạo form nhận file
   sv.on(
-      "/s", HTTP_ANY, []()
-      {   Serial.println("s");
+      "/u", HTTP_ANY, []()
+      {   
+        Serial.println("u");
           sv.send(200, "text/html", 
           "<html>"
             "<head>"
@@ -74,7 +78,7 @@ void startServer()
               "<a href='/x'>Format</a>"
               "<br>"
               "<br>"
-              "<form method='POST' action='/s' enctype='multipart/form-data'>"
+              "<form method='POST' action='/u' enctype='multipart/form-data'>"
                 "<input type='file' name='chon file'>"
                 "<input type='submit' value='Gửi đi'>"
               "</form>"
