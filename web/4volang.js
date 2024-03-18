@@ -31,6 +31,11 @@ function upVolang() {
   angleLuu = angle;
 }
 
+function setVolang(g) {
+  voLang.style.transform = `rotate(${g}deg)`;
+  document.getElementById("td").innerText =g.toFixed(2);
+}
+
 
 let angle_cu = 0;
 let goc = 0;
@@ -54,13 +59,13 @@ function moveVolang(e) {
       goc = -540
     }
 
+    if (isNaN(goc)) {
+      goc = 0;
+      console.log("Nan");
+    }
 
-    console.log(goc);
+    setVolang(goc)
 
-
-
-    voLang.style.transform = `rotate(${goc}deg)`;
-    document.getElementById("td").innerText = goc.toFixed(2);
   }
 }
 
@@ -96,3 +101,21 @@ voLang.addEventListener("touchmove", (e) => {
 
 
 
+function traLai() {
+  if (anVoLang == false && goc != 0) {
+    if (goc > 0) {
+      goc = goc - 1;
+    }
+    if (goc < 0) {
+      goc = goc + 1;
+    }
+    if ((goc < 1&&goc>0) || (goc > -1 && goc < 0)) {
+      goc = 0;
+    }
+    setVolang(goc);
+
+  }
+}
+
+
+setInterval(traLai,10)

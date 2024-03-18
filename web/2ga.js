@@ -106,19 +106,12 @@ chanPhanh.addEventListener("mousedown", function () {
   phanh();
 })
 
-
-// https://github.com/danro/jquery-easing/blob/master/jquery.easing.js
-
-// function easeInOutSine(x) {
-//   return -(Math.cos(Math.PI * x) - 1) / 2;
-// }
-
-// t: Thời gian lúc bắt đầu
-// b: Giá trị bắt đầu,
-// c: Thay đổi về giá trị,
-// d: Khoảng thời gian
-// function easeInOutSine(t, b, c, d) {
-//   return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;
-// } 
-
-// console.log(easeInOutSine(1, 2, 3, 4));
+//----------------------------------------------------
+function bezier(t, initial, p1, p2, final) {
+  return (
+    (1 - t) * (1 - t) * (1 - t) * initial +
+    3 * (1 - t) * (1 - t) * t * p1 +
+    3 * (1 - t) * t * t * p2 +
+    t * t * t * final
+  );
+}

@@ -11,3 +11,13 @@ void nhay(unsigned long interval, ConTroHam func)
     func();
   }
 }
+
+//  nhay(1000, led);
+// void led()
+// {
+//   pinMode(2, OUTPUT);
+//   digitalWrite(2, digitalRead(2));
+
+//   Serial.println(".");
+//   webSocket.broadcastTXT("."); // send data to all connected clients
+// }

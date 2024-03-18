@@ -11,6 +11,7 @@ WebSocketsServer webSocket(81); // create a websocket server on port 81
 
 #include "ham.h"
 #include "data.h"
+#include "sk.h"
 
 void startWifi()
 {
@@ -126,57 +127,30 @@ void startServer()
   sv.begin();
 }
 
-bool chay = false;
-
-int hue = 0;
-
 #define LED_RED 15 // specify the pins with an RGB LED connected
 #define LED_GREEN 12
 #define LED_BLUE 13
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
-{ // When a WebSocket message is received
-  switch (type)
+{
+  if (type == WStype_DISCONNECTED)
   {
-  case WStype_DISCONNECTED: // if the websocket is disconnected
     Serial.printf("[%u] Disconnected!\n", num);
-    break;
+  }
 
-  case WStype_CONNECTED:
-  { // if a new websocket connection is established
+  if (type == WStype_CONNECTED)
+  {
     IPAddress ip = webSocket.remoteIP(num);
     Serial.printf("ket noi voi [%u] tai dia chi %d.%d.%d.%d%s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
-    chay = false; // Turn rainbow off when a new connection is established
-    webSocket.sendTXT(num, "Connected");
+    webSocket.sendTXT(num, "da ket noi");
   }
-  break;
 
-  case WStype_TEXT:
+  if (type == WStype_TEXT)
+  {
     Serial.printf("[%u] get Text: %s\n", num, payload);
-
-    if (payload[0] == '#')
-    {
-      uint32_t rgb = (uint32_t)strtol((const char *)&payload[1], NULL, 16);
-      int r = ((rgb >> 20) & 0x3FF);
-      int g = ((rgb >> 10) & 0x3FF);
-      int b = rgb & 0x3FF;
-
-      analogWrite(LED_RED, r);
-      analogWrite(LED_GREEN, g);
-      analogWrite(LED_BLUE, b);
-    }
-    else if (payload[0] == 'B')
-    {
-      chay = true;
-    }
-    else if (payload[0] == 'T')
-    {
-      chay = false;
-    }
-
     String echoMessage = "Received:  " + String((char *)payload);
+    xulylenh(String((char *)payload));
     webSocket.sendTXT(num, echoMessage);
-    break;
   }
 }
 

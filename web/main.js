@@ -3,6 +3,7 @@ import { tinh } from "./1dc.js";
 import { } from "./2ga.js";
 import { khoiToaNutAn } from "./3nutan.js";
 import { } from "./4volang.js";
+import { } from "./5sk.js";
 
 function khoitao() {
   tinh();

@@ -3,7 +3,7 @@
   try {
     socket = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
   } catch (error) {
-    console.log("fghfg");
+    console.log("lỗi socket");
   }
   
   socket.addEventListener("message", (event) => {
