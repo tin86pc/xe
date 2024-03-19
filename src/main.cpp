@@ -49,7 +49,7 @@ void startServer()
   sv.on("/x", []()
         {
           Serial.println("Format...");
-          SPIFFS.format();
+          LittleFS.format();
           sv.send(200,"text/html","Format ok."); });
 
   sv.on("/s", []()
@@ -127,10 +127,6 @@ void startServer()
   sv.begin();
 }
 
-#define LED_RED 15 // specify the pins with an RGB LED connected
-#define LED_GREEN 12
-#define LED_BLUE 13
-
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
 {
   if (type == WStype_DISCONNECTED)
@@ -148,16 +144,18 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
   if (type == WStype_TEXT)
   {
     Serial.printf("[%u] get Text: %s\n", num, payload);
-    String echoMessage = "Received:  " + String((char *)payload);
-    xulylenh(String((char *)payload));
+    String sPayLoad = String((char *)payload);
+    String echoMessage = "echo> " + sPayLoad;
     webSocket.sendTXT(num, echoMessage);
+    
+    xulylenh(sPayLoad);
   }
 }
 
 void startWebSocket()
-{                                    // Start a WebSocket server
-  webSocket.begin();                 // start the websocket server
-  webSocket.onEvent(webSocketEvent); // if there's an incomming websocket message, go to function 'webSocketEvent'
+{
+  webSocket.begin();
+  webSocket.onEvent(webSocketEvent);
   Serial.println("WebSocket server started.");
 }
 

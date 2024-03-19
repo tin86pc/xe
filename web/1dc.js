@@ -33,35 +33,35 @@ function vt(e) {
   let Y = 0;
 
   if (e.type.includes(`touch`)) {
-      let { touches, changedTouches } = e.originalEvent ?? e;
-      let touch = touches[0] ?? changedTouches[0];
-      X = touch.pageX;
-      Y = touch.pageY;
+    let { touches, changedTouches } = e.originalEvent ?? e;
+    let touch = touches[0] ?? changedTouches[0];
+    X = touch.pageX;
+    Y = touch.pageY;
 
-      if (touches.length > 1) {
+    if (touches.length > 1) {
 
-          for (let i = 0; i < touches.length; i++) {
-              if (e.touches[i].target.id == e.target.id) {
-                  touch = touches[i] ?? changedTouches[i];
+      for (let i = 0; i < touches.length; i++) {
+        if (e.touches[i].target.id == e.target.id) {
+          touch = touches[i] ?? changedTouches[i];
 
-                  X = touch.pageX;
-                  Y = touch.pageY;
-              }
-          }
+          X = touch.pageX;
+          Y = touch.pageY;
+        }
       }
+    }
 
   } else if (e.type.includes(`mouse`)) {
-      X = e.clientX;
-      Y = e.clientY;
+    X = e.clientX;
+    Y = e.clientY;
   }
 
   return {
-      x: X,
-      y: Y
+    x: X,
+    y: Y
   }
 }
 
 
 
 
-export { log, tinh,vt }
+export { log, tinh, vt }

@@ -1,8 +1,9 @@
-#include <FS.h>
+#include "LittleFS.h"
+
 
 void startSPIFFS()
 {
-    if (!SPIFFS.begin())
+    if (!LittleFS.begin())
     {
         Serial.println("An Error has occurred while mounting SPIFFS");
         return;
@@ -13,8 +14,8 @@ bool clearData(String filename)
 {
 
     Serial.println("clearData:" + filename);
-    SPIFFS.begin();
-    File f = SPIFFS.open(String("/") + filename, "w");
+    LittleFS.begin();
+    File f = LittleFS.open(String("/") + filename, "w");
     if (!f)
     {
         f.close();
@@ -30,8 +31,8 @@ bool clearData(String filename)
 bool saveData(String filename, const uint8_t *content, uint16_t len)
 {
     Serial.println("saveData:" + filename);
-    SPIFFS.begin();
-    File f = SPIFFS.open(String("/") + filename, "a");
+    LittleFS.begin();
+    File f = LittleFS.open(String("/") + filename, "a");
     if (!f)
     {
         f.close();
@@ -48,8 +49,8 @@ bool saveData(String filename, const uint8_t *content, uint16_t len)
 String getData(String filename)
 {
     Serial.println("getData:" + filename);
-    SPIFFS.begin();
-    File f = SPIFFS.open(String("/") + filename, "r");
+    LittleFS.begin();
+    File f = LittleFS.open(String("/") + filename, "r");
     String ret = f.readString();
 
     f.close();

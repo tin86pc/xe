@@ -22,5 +22,6 @@
 
 void xulylenh(String s)
 {
+   Serial.print("---");
   Serial.print(s);
 }
