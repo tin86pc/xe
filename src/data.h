@@ -1,7 +1,6 @@
 #include "LittleFS.h"
 
-
-void startSPIFFS()
+void startLittleFS()
 {
     if (!LittleFS.begin())
     {
@@ -10,10 +9,10 @@ void startSPIFFS()
     }
 }
 
-bool clearData(String filename)
+bool clearFile(String filename)
 {
 
-    Serial.println("clearData:" + filename);
+    Serial.println("Clear file:" + filename);
     LittleFS.begin();
     File f = LittleFS.open(String("/") + filename, "w");
     if (!f)
@@ -28,9 +27,9 @@ bool clearData(String filename)
     }
 }
 
-bool saveData(String filename, const uint8_t *content, uint16_t len)
+bool saveFile(String filename, const uint8_t *content, uint16_t len)
 {
-    Serial.println("saveData:" + filename);
+    Serial.println("Save file:" + filename);
     LittleFS.begin();
     File f = LittleFS.open(String("/") + filename, "a");
     if (!f)
@@ -46,9 +45,9 @@ bool saveData(String filename, const uint8_t *content, uint16_t len)
     }
 }
 
-String getData(String filename)
+String getFile(String filename)
 {
-    Serial.println("getData:" + filename);
+    Serial.println("Get file:" + filename);
     LittleFS.begin();
     File f = LittleFS.open(String("/") + filename, "r");
     String ret = f.readString();
@@ -58,18 +57,19 @@ String getData(String filename)
     return ret;
 }
 
-
-
-// ;board_build.filesystem = littlefs
-// #include <LittleFS.h>
-// String getData(String filename)
-// {
-//     Serial.println("getData:" + filename);
-//     LittleFS.begin();
-//     File f = LittleFS.open(String("/") + filename, "r");
-//     String ret = f.readString();
-
-//     f.close();
-
-//     return ret;
-// }
+bool fomatAll()
+{
+    Serial.println("Fomat All");
+    LittleFS.begin();
+    File f = LittleFS.open(String("/") + filename, "a");
+    if (!f)
+    {
+        f.close();
+        return false;
+    }
+    else
+    {
+        LittleFS.format();
+        return true;
+    }
+}

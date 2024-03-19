@@ -1,5 +1,5 @@
 import { log } from "./1dc.js";
-import {send } from "./5sk.js";
+import { send } from "./5sk.js";
 
 
 function khoiToaNutAn() {
@@ -19,7 +19,7 @@ function khoiToaNutAn() {
 
 function anNut(e) {
   e.preventDefault();
-  log(e.nd)
+  log("send> " + e.nd)
   send(e.nd);
 }
 

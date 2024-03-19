@@ -1,4 +1,4 @@
-import { log, vt } from "./1dc.js"
+import { log } from "./1dc.js"
 
 var socket;
 try {
@@ -9,6 +9,7 @@ try {
 
 socket.addEventListener("message", (event) => {
   console.log(event.data);
+  log(event.data)
 });
 
 socket.addEventListener("open", (event) => {

@@ -34,22 +34,22 @@ void startServer()
   sv.on("/", []()
         {
           Serial.println("index.html");
-          sv.send(200, "text/html", getData("index.html") ); });
+          sv.send(200, "text/html", getFile("index.html") ); });
 
   sv.on("/script.js", []()
         {
           Serial.println("script.js");
-          sv.send(200, "text/javascript", getData("script.js") ); });
+          sv.send(200, "text/javascript", getFile("script.js") ); });
 
   sv.on("/style.css", []()
         {
           Serial.println("style.css");
-          sv.send(200, "text/css", getData("style.css") ); });
+          sv.send(200, "text/css", getFile("style.css") ); });
 
   sv.on("/x", []()
         {
           Serial.println("Format...");
-          LittleFS.format();
+          fomatAll();
           sv.send(200,"text/html","Format ok."); });
 
   sv.on("/s", []()
@@ -92,16 +92,16 @@ void startServer()
         if (file.status == UPLOAD_FILE_START)
         {
           Serial.println("ghi file " + file.filename);
-          clearData(file.filename);
+          clearFile(file.filename);
         }
         else if (file.status == UPLOAD_FILE_WRITE)
         {
           Serial.println("dang gui");
-          saveData(file.filename, file.buf, file.currentSize);
+          saveFile(file.filename, file.buf, file.currentSize);
         }
         else if (file.status == UPLOAD_FILE_END)
         {
-          Serial.println("gui song");
+          Serial.println("gui file song");
         }
       });
 
@@ -117,7 +117,7 @@ void startServer()
                   }
                   if (lf == ".js")
                   {
-                    sv.send(200, "application/javascript", getData(nf));
+                    sv.send(200, "application/javascript", getFile(nf));
                   }
                   else
                   {
@@ -139,11 +139,13 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
     IPAddress ip = webSocket.remoteIP(num);
     Serial.printf("ket noi voi [%u] tai dia chi %d.%d.%d.%d%s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
     webSocket.sendTXT(num, "da ket noi");
+
+    batdauketnoi();
   }
 
   if (type == WStype_TEXT)
   {
-    Serial.printf("[%u] get Text: %s\n", num, payload);
+    Serial.printf("user [%u] gui: %s\n", num, payload);
     String sPayLoad = String((char *)payload);
     String echoMessage = "echo> " + sPayLoad;
     webSocket.sendTXT(num, echoMessage);
@@ -174,7 +176,7 @@ void setup()
   Serial.println();
 
   startWifi();
-  startSPIFFS();
+  startLittleFS();
   startWebSocket();
   startServer();
 }
