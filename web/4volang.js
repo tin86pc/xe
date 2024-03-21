@@ -3,7 +3,7 @@ import { vt, log } from "./1dc.js";
 
 let anVoLang = false;
 let gocAn;
-let angle;
+let angle=0;
 let angleLuu = 0;
 let voLang = document.getElementById("vo-lang");
 
@@ -33,16 +33,20 @@ function upVolang() {
 
 function setVolang(g) {
   voLang.style.transform = `rotate(${g}deg)`;
-  document.getElementById("td").innerText =g.toFixed(2);
-}
+  document.getElementById("td").innerText = g.toFixed(2);
 
+  let gg = Math.round(g);
+  voLang.setAttribute("v", gg);
+}
 
 let angle_cu = 0;
 let goc = 0;
 function moveVolang(e) {
   if (anVoLang) {
     angle = layGoc(e) - gocAn + angleLuu;
+  
     let h = angle - angle_cu;
+
     angle_cu = angle
     if (h > 300) {
       h = h - 360;
@@ -57,11 +61,6 @@ function moveVolang(e) {
     }
     if (goc < -540) {
       goc = -540
-    }
-
-    if (isNaN(goc)) {
-      goc = 0;
-      console.log("Nan");
     }
 
     setVolang(goc)
@@ -109,7 +108,7 @@ function traLai() {
     if (goc < 0) {
       goc = goc + 1;
     }
-    if ((goc < 1&&goc>0) || (goc > -1 && goc < 0)) {
+    if ((goc < 1 && goc > 0) || (goc > -1 && goc < 0)) {
       goc = 0;
     }
     setVolang(goc);
@@ -118,4 +117,4 @@ function traLai() {
 }
 
 
-setInterval(traLai,10)
+setInterval(traLai, 10)

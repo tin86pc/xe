@@ -7,7 +7,7 @@ function khoiToaNutAn() {
 
   for (let i = 0; i < aid.length; i++) {
     document.getElementById(aid[i]).addEventListener("mousedown", (e) => {
-      e['nd'] = "L" + i;
+      e['nd'] = "l" + i;
       anNut(e);
     });
     document.getElementById(aid[i]).addEventListener("touchstart", (e) => {

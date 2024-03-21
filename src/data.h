@@ -4,14 +4,13 @@ void startLittleFS()
 {
     if (!LittleFS.begin())
     {
-        Serial.println("An Error has occurred while mounting SPIFFS");
+        Serial.println("An Error has occurred while mounting LittleFS");
         return;
     }
 }
 
 bool clearFile(String filename)
 {
-
     Serial.println("Clear file:" + filename);
     LittleFS.begin();
     File f = LittleFS.open(String("/") + filename, "w");
@@ -61,14 +60,14 @@ bool fomatAll()
 {
     Serial.println("Fomat All");
     LittleFS.begin();
-    File f = LittleFS.open(String("/") + filename, "a");
-    if (!f)
+    if (!LittleFS.begin())
     {
-        f.close();
+        Serial.println("loi");
         return false;
     }
     else
     {
+        Serial.println("ok");
         LittleFS.format();
         return true;
     }

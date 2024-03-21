@@ -1,7 +1,7 @@
 import { log, vt } from "./1dc.js";
 
-const chanGa = document.getElementById('chan-ga');
-
+let chanGa = document.getElementById('chan-ga');
+let chanGa2 = document.getElementById('chan-ga2');
 
 function layVTbam(e) {
   let cg = chanGa.getBoundingClientRect()
@@ -18,7 +18,8 @@ function layVTbam(e) {
 }
 
 function setChanGa(p) {
-  document.getElementById("chan-ga2").style.height = p + '%';
+  chanGa2.setAttribute("v", p);
+  chanGa2.style.height = p + '%';
 }
 
 
@@ -106,12 +107,3 @@ chanPhanh.addEventListener("mousedown", function () {
   phanh();
 })
 
-//----------------------------------------------------
-function bezier(t, initial, p1, p2, final) {
-  return (
-    (1 - t) * (1 - t) * (1 - t) * initial +
-    3 * (1 - t) * (1 - t) * t * p1 +
-    3 * (1 - t) * t * t * p2 +
-    t * t * t * final
-  );
-}

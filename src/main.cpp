@@ -5,13 +5,16 @@
 #include <ESP8266HTTPUpdateServer.h> // nạp chương trình qua wifi
 #include <WebSocketsServer.h>
 
+
 ESP8266WebServer sv(80);
 ESP8266HTTPUpdateServer u;      // nạp chương trình qua wifi
 WebSocketsServer webSocket(81); // create a websocket server on port 81
 
 #include "ham.h"
 #include "data.h"
+#include "vl.h"
 #include "sk.h"
+
 
 void startWifi()
 {
@@ -127,40 +130,6 @@ void startServer()
   sv.begin();
 }
 
-void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
-{
-  if (type == WStype_DISCONNECTED)
-  {
-    Serial.printf("[%u] Disconnected!\n", num);
-  }
-
-  if (type == WStype_CONNECTED)
-  {
-    IPAddress ip = webSocket.remoteIP(num);
-    Serial.printf("ket noi voi [%u] tai dia chi %d.%d.%d.%d%s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
-    webSocket.sendTXT(num, "da ket noi");
-
-    batdauketnoi();
-  }
-
-  if (type == WStype_TEXT)
-  {
-    Serial.printf("user [%u] gui: %s\n", num, payload);
-    String sPayLoad = String((char *)payload);
-    String echoMessage = "echo> " + sPayLoad;
-    webSocket.sendTXT(num, echoMessage);
-    
-    xulylenh(sPayLoad);
-  }
-}
-
-void startWebSocket()
-{
-  webSocket.begin();
-  webSocket.onEvent(webSocketEvent);
-  Serial.println("WebSocket server started.");
-}
-
 void led()
 {
   pinMode(2, OUTPUT);
@@ -179,6 +148,7 @@ void setup()
   startLittleFS();
   startWebSocket();
   startServer();
+  startServo();
 }
 
 void loop()

@@ -23,14 +23,18 @@
   position: fixed;
 }
 
+.btn:active {
+  background-color: #3e8e41;
+}
+
+
+
 .btn {
   background-color: #cccccc;
   border-radius: 1.5rem;
 }
 
-.btn:active {
-  background-color: #3e8e41;
-}
+
 
 
 /*-----------*/
