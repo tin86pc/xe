@@ -3,8 +3,8 @@ Servo myservo;
 
 void setServo(int val)
 {
-    val = map(val, -540, 540, 0, 180);
-    Serial.print(val);
+    val = map(val, -540, 540, 45, 135);
+    Serial.println(val);
     myservo.write(val);
 }
 
@@ -14,12 +14,40 @@ void startServo()
     setServo(0);
 }
 
+String huong = "P";
+#define tien D4
+#define lui D5
+#define td D6
 
+void ktTocDo()
+{
+    pinMode(tien, OUTPUT);
+    pinMode(lui, OUTPUT);
+    pinMode(td, OUTPUT);
+}
 
-// void setup()
-// {
-// ledcAttachPin(18, 0); // broche 18, kênh 0.
-// ledcSetup(0, 5000, 12); // kênh = 0, tần số = 5000 Hz, độ phân giải = 12 bit
-// ledcWrite(0, 2048); // kênh = 0, chu kỳ quan hệ = 2048
-// }
+void datTocDo(int val)
+{
+    val = map(val, 0, 100, 0, 255);
+    if (huong == "D")
+    {
+        digitalWrite(lui, LOW);
+        digitalWrite(tien, HIGH);
+    }
+    if (huong == "R")
+    {
+        digitalWrite(tien, LOW);
+        digitalWrite(lui, HIGH);
+    }
+    if (huong == "N" || huong == "P")
+    {
+        digitalWrite(tien, LOW);
+        digitalWrite(lui, LOW);
+    }
+    analogWrite(td, val);
+}
 
+// - P (Parking)    = đậu xe
+// - R (Reverse)    = lùi xe
+// - N (Neutral)    = trạng thái tự do
+// - D (Drive)      = số tiến

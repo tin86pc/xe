@@ -1,20 +1,38 @@
 
 void batdauketnoi()
 {
-  Serial.print("bat dau ket noi");
+  Serial.println("bat dau ket noi. ");
+  webSocket.broadcastTXT("bat dau ket noi. ");
 }
 
 void xulylenh(String s)
 {
   String sv = s.substring(1);
   int iv = sv.toInt();
-  Serial.print(iv);
+  Serial.println(iv);
 
   if (s.startsWith("l"))
   {
+    if (iv == 0)
+    {
+      huong = "P";
+    }
+    if (iv == 1)
+    {
+      huong = "R";
+    }
+    if (iv == 2)
+    {
+      huong = "N";
+    }
+    if (iv == 3)
+    {
+      huong = "D";
+    }
   }
   if (s.startsWith("g"))
   {
+    datTocDo(iv);
   }
   if (s.startsWith("v"))
   {
@@ -34,7 +52,6 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
     IPAddress ip = webSocket.remoteIP(num);
     Serial.printf("ket noi voi [%u] tai dia chi %d.%d.%d.%d%s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
     webSocket.sendTXT(num, "da ket noi");
-
     batdauketnoi();
   }
 
