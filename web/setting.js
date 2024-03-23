@@ -2,16 +2,23 @@
 import { tinh } from "./1dc.js";
 import { send } from "./5sk.js";
 
-function khoitao() {
-  tinh();
+tinh();
+
+const a = ['tf', 'pf', 'tb', 'pb', 'ipf', 'ipb']
+
+function get(id) {
+  return document.getElementById(id).value;
 }
 
-khoitao();
+function set(id, v) {
+  document.getElementById(id).value = v;
+}
 
-document.getElementById('ok').addEventListener("click", (e) => { 
-  console.log("sdfs");
-  send('sdfsd');
+document.getElementById('ok').addEventListener("click", (e) => {
 
+  let s = "s"+get(a[0]) + "|" + get(a[1]) + "|" + get(a[2]) + "|" + get(a[3])
+  send(s);
+  console.log(s);
 })
 
 

@@ -6,12 +6,9 @@ import { khoiToaNutAn } from "./3nutan.js";
 import { } from "./4volang.js";
 
 
-function khoitao() {
-  tinh();
-  khoiToaNutAn();
-}
+tinh();
+khoiToaNutAn();
 
-khoitao();
 
 
 
@@ -29,7 +26,6 @@ khoitao();
 //   LUT_x.push(a * x1 + 3 * b * x2 + 3 * c * x3 + d * x4);
 //   LUT_y.push(a * y1 + 3 * b * y2 + 3 * c * y3 + d * y4);
 // }
-
 
 
 

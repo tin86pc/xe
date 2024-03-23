@@ -38,13 +38,20 @@ void xulylenh(String s)
     }
     capNhat();
   }
+
   if (s.startsWith("g"))
   {
     datTocDo(iv);
   }
+
   if (s.startsWith("v"))
   {
     setServo(iv);
+  }
+
+  if (s.startsWith("s"))
+  {
+
   }
 }
 
