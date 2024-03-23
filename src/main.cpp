@@ -56,7 +56,10 @@ void startServer()
           sv.send(200,"text/html","Format ok."); });
 
   sv.on("/s", []()
-        { sv.send(200, "text/html", "setting"); });
+        { 
+          sv.send(200, "text/html", getFile("setting.html"));  
+          Serial.println("Cai dat");
+        });
 
   // Tạo form nhận file
   sv.on(

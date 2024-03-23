@@ -1,8 +1,15 @@
+void capNhat()
+{
+  String nd = "H" + huong;
+  webSocket.broadcastTXT(nd);
+}
 
 void batdauketnoi()
 {
   Serial.println("bat dau ket noi. ");
   webSocket.broadcastTXT("bat dau ket noi. ");
+
+  capNhat();
 }
 
 void xulylenh(String s)
@@ -29,6 +36,7 @@ void xulylenh(String s)
     {
       huong = "D";
     }
+    capNhat();
   }
   if (s.startsWith("g"))
   {
@@ -58,10 +66,10 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
   if (type == WStype_TEXT)
   {
     Serial.printf("user [%u] gui: %s\n", num, payload);
+
     String sPayLoad = String((char *)payload);
     String echoMessage = "echo> " + sPayLoad;
     webSocket.sendTXT(num, echoMessage);
-
     xulylenh(sPayLoad);
   }
 }

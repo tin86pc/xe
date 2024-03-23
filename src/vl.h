@@ -29,6 +29,7 @@ void ktTocDo()
 void datTocDo(int val)
 {
     val = map(val, 0, 100, 0, 255);
+    
     if (huong == "D")
     {
         digitalWrite(lui, LOW);
