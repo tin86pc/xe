@@ -22,41 +22,67 @@ void nhay(unsigned long interval, ConTroHam func)
 //   webSocket.broadcastTXT("."); // send data to all connected clients
 // }
 
-bool get_token(String &from, String &to, uint8_t index, char separator)
+String tachChuoi(String ss, char kt, int vt)
 {
-  uint16_t start = 0, idx = 0;
-  uint8_t cur = 0;
-  while (idx < from.length())
+  int v = 0;
+  int s = 0;
+  for (unsigned int i = 0; i <= ss.length(); i++)
   {
-    if (from.charAt(idx) == separator)
+    if (ss[i] == kt)
     {
-      if (cur == index)
+      if (v == vt)
       {
-        to = from.substring(start, idx);
-        return true;
+        return ss.substring(s, i);
       }
-      cur++;
-      while ((idx < from.length() - 1) && (from.charAt(idx + 1) == separator))
-        idx++;
-      start = idx + 1;
+      s = i + 1;
+      v++;
     }
-    idx++;
   }
-  if ((cur == index) && (start < from.length()))
-  {
-    to = from.substring(start, from.length());
-    return true;
-  }
-  return false;
+  return "";
 }
 
-// uint8_t token_idx = 0;
-// while (get_token(tokens, token, token_idx, ' '))
-// {
-//   Serial.print("Token[");
-//   Serial.print(token_idx);
-//   Serial.print("] = \"");
-//   Serial.print(token);
-//   Serial.println("\"");
-//   token_idx++;
-// }
+// Serial.println(tachChuoi(sv, '|', 0));
+
+void writeEEPROM(int startAdr, String writeString)
+{
+  EEPROM.begin(512);
+  Serial.println();
+  Serial.println("Startup");
+  int charLength = writeString.length();
+  Serial.println("writing eeprom:");
+  for (int i = 0; i < charLength; ++i)
+  {
+    EEPROM.write(startAdr + i, writeString[i]);
+    Serial.print("Wrote: ");
+    Serial.println(writeString[i]);
+  }
+  EEPROM.write(writeString.length(), '\0');
+  EEPROM.commit();
+}
+
+String readEEPROM(int startAdr, int maxLength)
+{
+  String dest = "";
+  Serial.println("Reading EEPROM");
+  EEPROM.begin(512);
+  for (int i = 0; i < maxLength; ++i)
+  {
+    dest += char(EEPROM.read(startAdr + i));
+    if (dest[i] == '\0')
+      break;
+  }
+  Serial.print("ready reading:");
+  Serial.println(dest);
+  return dest;
+}
+
+// writeEEPROM(0,wifi_ssid_private);//32 byte max length
+// writeEEPROM(32,wifi_password_private);//32 byte max length
+// writeEEPROM(64,clientName);//10 byte max length
+// writeEEPROM(74,ipAddr);//17 byte max length
+// EEPROM.commit();
+
+// readEEPROM(0,32,wifi_ssid_private);//get SSID max 32byte
+// readEEPROM(32,32,wifi_password_private);get PW max 32byte
+// readEEPROM(64,10,clientName);//get clientName max 10byte
+// readEEPROM(74,16,ipAddr);//get ipAddr max 16byte

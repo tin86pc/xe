@@ -4,11 +4,18 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPUpdateServer.h> // nạp chương trình qua wifi
 #include <WebSocketsServer.h>
-
+#include <EEPROM.h>
+#include <Arduino_JSON.h>
 
 ESP8266WebServer sv(80);
 ESP8266HTTPUpdateServer u;      // nạp chương trình qua wifi
 WebSocketsServer webSocket(81); // create a websocket server on port 81
+
+String tenWifiPhat = "abc";
+String passWifiPhat = "12345678";
+
+String tenWifiBat = "Tuyen T1";
+String passWifiBat = "0978333563";
 
 #include "ham.h"
 #include "data.h"
@@ -18,10 +25,11 @@ WebSocketsServer webSocket(81); // create a websocket server on port 81
 
 void startWifi()
 {
+  
   WiFi.mode(WIFI_AP_STA);
-  WiFi.softAP("abc", "12345678");
-  WiFi.begin("Tuyen T1", "0978333563");
-  // WiFi.begin("Mercusys", "mot2345678");
+  WiFi.softAP(tenWifiPhat, passWifiPhat);
+  WiFi.begin(tenWifiBat, passWifiBat);
+
   while (WiFi.waitForConnectResult() != WL_CONNECTED)
   {
     delay(100);
@@ -58,8 +66,7 @@ void startServer()
   sv.on("/s", []()
         { 
           sv.send(200, "text/html", getFile("setting.html"));  
-          Serial.println("Cai dat");
-        });
+          Serial.println("Cai dat"); });
 
   // Tạo form nhận file
   sv.on(
@@ -152,6 +159,8 @@ void setup()
   startWebSocket();
   startServer();
   startServo();
+  String s = getFile("setting.json");
+  Serial.println(s);
 }
 
 void loop()

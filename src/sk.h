@@ -2,6 +2,16 @@ void capNhat()
 {
   String nd = "H" + huong;
   webSocket.broadcastTXT(nd);
+
+  // tenWifiPhat = readEEPROM(0, 32);
+  // passWifiPhat = readEEPROM(32, 64);
+  // tenWifiBat = readEEPROM(64, 96);
+  // passWifiBat = readEEPROM(96, 128);
+
+  // nd = "s" + tenWifiPhat + "|" + passWifiPhat + "|" + tenWifiBat + "|" + passWifiBat + "|";
+
+  // webSocket.broadcastTXT(nd);
+  // Serial.println(nd);
 }
 
 void batdauketnoi()
@@ -16,7 +26,6 @@ void xulylenh(String s)
 {
   String sv = s.substring(1);
   int iv = sv.toInt();
-  Serial.println(iv);
 
   if (s.startsWith("l"))
   {
@@ -51,7 +60,19 @@ void xulylenh(String s)
 
   if (s.startsWith("s"))
   {
+    // lưu vào eeprom
+    String tenWifiPhat = tachChuoi(sv, '|', 0);
+    String passWifiPhat = tachChuoi(sv, '|', 1);
+    String tenWifiBat = tachChuoi(sv, '|', 2);
+    String passWifiBat = tachChuoi(sv, '|', 3);
 
+    writeEEPROM(0, tenWifiPhat);
+    writeEEPROM(32, passWifiPhat);
+
+    writeEEPROM(64, tenWifiBat);
+    writeEEPROM(96, passWifiBat);
+    EEPROM.commit();
+    Serial.println("luu vao eeprom ok");
   }
 }
 
