@@ -11,11 +11,15 @@ ESP8266WebServer sv(80);
 ESP8266HTTPUpdateServer u;      // nạp chương trình qua wifi
 WebSocketsServer webSocket(81); // create a websocket server on port 81
 
-String tenWifiPhat = "abc";
+String tenWifiPhat = "TP-LINK";
 String passWifiPhat = "12345678";
 
-String tenWifiBat = "Tuyen T1";
-String passWifiBat = "0978333563";
+
+// String tenWifiBat = "Tuyen T1";
+// String passWifiBat = "0978333563";
+
+String tenWifiBat = "TP-LINK_2FD2";
+String passWifiBat = "123456789";
 
 #include "ham.h"
 #include "data.h"
@@ -89,11 +93,14 @@ void startServer()
               "<a href='/update'>Update Firmware</a>"
               "<br>"
               "<br>"
-              "<a href='/x'>Format</a>"
+              "<button onclick='if(confirm(`format`)==true)window.location.href=`/x`'>Format</button>"
+              "<br>"
+              "<br>"
+              "<a href='/s'>Cài đặt</a>"
               "<br>"
               "<br>"
               "<form method='POST' action='/u' enctype='multipart/form-data'>"
-                "<input type='file' name='chon file'>"
+                "<input type='file' name='chon file' multiple>"
                 "<input type='submit' value='Gửi đi'>"
               "</form>"
             "</body>"

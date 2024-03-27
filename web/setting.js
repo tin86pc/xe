@@ -31,7 +31,11 @@ document.getElementById('ok').addEventListener("click", (e) => {
   fetch('/u', {
     method: 'POST',
     body: formData})
-   .then(response => console.log(response.status))
+   .then(response => {
+    if(response.status==200){
+      alert("lưu thành công")
+    }
+  })
   
   console.log("send file ok");
 })
