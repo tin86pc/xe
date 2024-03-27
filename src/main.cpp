@@ -4,44 +4,63 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPUpdateServer.h> // nạp chương trình qua wifi
 #include <WebSocketsServer.h>
-#include <EEPROM.h>
-#include <Arduino_JSON.h>
 
 ESP8266WebServer sv(80);
 ESP8266HTTPUpdateServer u;      // nạp chương trình qua wifi
 WebSocketsServer webSocket(81); // create a websocket server on port 81
-
-String tenWifiPhat = "TP-LINK";
-String passWifiPhat = "12345678";
-
-
-// String tenWifiBat = "Tuyen T1";
-// String passWifiBat = "0978333563";
-
-String tenWifiBat = "TP-LINK_2FD2";
-String passWifiBat = "123456789";
 
 #include "ham.h"
 #include "data.h"
 #include "vl.h"
 #include "sk.h"
 
-
 void startWifi()
 {
-  
+
+  String tenWifiPhat = "TP-LINK";
+  String passWifiPhat = "12345678";
+
+  String tenWifiBat = "Tuyen T1";
+  String passWifiBat = "0978333563";
+
+  String s = getFile("setting.json");
+
+  tenWifiPhat = tachChuoi(s, '|', 0);
+  passWifiPhat = tachChuoi(s, '|', 1);
+
+  tenWifiBat = tachChuoi(s, '|', 2);
+  passWifiBat = tachChuoi(s, '|', 3);
+
+  // Serial.println(tenWifiPhat);
+  // Serial.println(passWifiPhat);
+  // Serial.println(tenWifiBat);
+  // Serial.println(passWifiBat);
+
   WiFi.mode(WIFI_AP_STA);
-  WiFi.softAP(tenWifiPhat, passWifiPhat);
+
+  WiFi.softAP(tenWifiPhat);
   WiFi.begin(tenWifiBat, passWifiBat);
 
-  while (WiFi.waitForConnectResult() != WL_CONNECTED)
+  // nếu lỗi kết nối sẽ phát chế độ AP
+  if (WiFi.waitForConnectResult() != WL_CONNECTED)
   {
+    WiFi.softAPdisconnect();
+    WiFi.disconnect();
+
+    WiFi.mode(WIFI_AP);
     delay(100);
+    WiFi.softAP(tenWifiPhat);
+    Serial.println(WiFi.softAPIP());
+  }
+  else
+  {
+    Serial.print("Ket noi wifi: ");
+    Serial.println(tenWifiBat);
+    Serial.print("Dia chi IP: ");
+    Serial.println(WiFi.localIP());
   }
 
   u.setup(&sv); // nạp chương trình qua wifi
-  Serial.println("Ket noi wifi: Tuyen T1 dia chi IP");
-  Serial.println(WiFi.localIP());
 }
 
 void startServer()
@@ -71,6 +90,9 @@ void startServer()
         { 
           sv.send(200, "text/html", getFile("setting.html"));  
           Serial.println("Cai dat"); });
+
+  sv.on("/r", []()
+        { ESP.restart(); });
 
   // Tạo form nhận file
   sv.on(
@@ -139,6 +161,10 @@ void startServer()
                   {
                     sv.send(200, "application/javascript", getFile(nf));
                   }
+                  if (lf == ".json")
+                  {
+                    sv.send(200, "application/json", getFile(nf));
+                  }
                   else
                   {
                     sv.send(404,"text/html","Error 404 NOT FOUND");
@@ -161,13 +187,12 @@ void setup()
   Serial.begin(115200);
   Serial.println();
 
-  startWifi();
   startLittleFS();
-  startWebSocket();
+  startWifi();
+
   startServer();
+  startWebSocket();
   startServo();
-  String s = getFile("setting.json");
-  Serial.println(s);
 }
 
 void loop()

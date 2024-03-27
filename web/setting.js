@@ -4,6 +4,23 @@ import { send, skSocket } from "./5sk.js";
 
 tinh();
 
+fetch('/setting.json')
+   .then(response => response.text())
+   .then(text => {
+    console.log(text);
+    const ar = text.split('|')
+
+    set(a[0], ar[0]);
+    set(a[1], ar[1]);
+    set(a[2], ar[2]);
+    set(a[3], ar[3]);
+
+    document.getElementById('ipb').text+=ar[4];
+  
+  })
+   
+
+
 const a = ['tf', 'pf', 'tb', 'pb', 'ipf', 'ipb']
 
 function get(id) {
@@ -16,15 +33,10 @@ function set(id, v) {
 
 document.getElementById('ok').addEventListener("click", (e) => {
 
-  const obj={
-    "tf": get("tf"),
-    "pf": get("pf"),
-    "tb": get("tb"),
-    "pb": get("pb")
-  }
+  const nd=get("tf")+"|"+get("pf")+"|"+get("tb")+"|"+get("pb")+"|";
+  console.log(nd);
 
-  const jsn = JSON.stringify(obj);
-  const blob = new Blob([jsn], { type: 'application/json' });
+  const blob = new Blob([nd], { type: 'application/json' });
   let formData = new FormData();
   formData.append("file", blob,'setting.json');
 
@@ -37,20 +49,19 @@ document.getElementById('ok').addEventListener("click", (e) => {
     }
   })
   
-  console.log("send file ok");
 })
 
-function capNhatHienThi(s) {
-  if (s.charAt(0) == "s") {
-    s=s.substring(1)
-    const ar = s.split('|')
-    for (let i = 0; i < ar.length; i++) {
-      set(a[i], ar[i]);
-    }
-  }
-}
+// function capNhatHienThi(s) {
+//   if (s.charAt(0) == "s") {
+//     s=s.substring(1)
+//     const ar = s.split('|')
+//     for (let i = 0; i < ar.length; i++) {
+//       set(a[i], ar[i]);
+//     }
+//   }
+// }
 
-skSocket(capNhatHienThi)
+// skSocket(capNhatHienThi)
 
 
 
