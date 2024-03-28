@@ -41,7 +41,7 @@ void startWifi()
   WiFi.softAP(tenWifiPhat);
   WiFi.begin(tenWifiBat, passWifiBat);
 
-  // nếu lỗi kết nối sẽ phát chế độ AP
+  // nếu lỗi kết nối sẽ phát chế độ
   if (WiFi.waitForConnectResult() != WL_CONNECTED)
   {
     WiFi.softAPdisconnect();
@@ -66,30 +66,15 @@ void startWifi()
 void startServer()
 {
   sv.on("/", []()
-        {
-          Serial.println("index.html");
-          sv.send(200, "text/html", getFile("index.html") ); });
+        { sv.send(200, "text/html", getFile("index.html")); });
 
-  sv.on("/script.js", []()
-        {
-          Serial.println("script.js");
-          sv.send(200, "text/javascript", getFile("script.js") ); });
-
-  sv.on("/style.css", []()
-        {
-          Serial.println("style.css");
-          sv.send(200, "text/css", getFile("style.css") ); });
+  sv.on("/s", []()
+        { sv.send(200, "text/html", getFile("setting.html")); });
 
   sv.on("/x", []()
         {
-          Serial.println("Format...");
           fomatAll();
           sv.send(200,"text/html","Format ok."); });
-
-  sv.on("/s", []()
-        { 
-          sv.send(200, "text/html", getFile("setting.html"));  
-          Serial.println("Cai dat"); });
 
   sv.on("/r", []()
         { ESP.restart(); });
@@ -151,23 +136,14 @@ void startServer()
                 {
                   String uri = sv.uri();
                   String nf = uri.substring(1);
-                  String lf = "";                
-                  int vt = nf.indexOf(".");
-                  if (vt >= 0)
+                  String lf = getContentType(nf);
+                  if (lf != "")
                   {
-                    lf = nf.substring(vt, nf.length());
-                  }
-                  if (lf == ".js")
-                  {
-                    sv.send(200, "application/javascript", getFile(nf));
-                  }
-                  if (lf == ".json")
-                  {
-                    sv.send(200, "application/json", getFile(nf));
+                    sv.send(200, lf, getFile(nf));
                   }
                   else
                   {
-                    sv.send(404,"text/html","Error 404 NOT FOUND");
+                    sv.send(404, "text/html", "Error 404 NOT FOUND");
                   } });
 
   sv.begin();

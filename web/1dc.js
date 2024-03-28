@@ -1,5 +1,5 @@
 function log(nd) {
-  const e = document.getElementById("log")
+  const e = document.getElementById("log");
   e.value += "> " + nd + "\r\n";
   e.scrollTop = e.scrollHeight;
 }
@@ -15,13 +15,13 @@ function tinh() {
     main.style.height = doc + "px";
   }
   if (doc * 2 >= ngang) {
-
     main.style.width = ngang + "px";
     main.style.height = ngang / 2 + "px";
   }
 
-  // sử dụng rem làm kích thước tham chiếu 
-  document.getElementById('root').style.fontSize = parseFloat(main.style.width) / 100 + "px";
+  // sử dụng rem làm kích thước tham chiếu
+  document.getElementById("root").style.fontSize =
+    parseFloat(main.style.width) / 100 + "px";
 }
 
 window.addEventListener("resize", () => {
@@ -39,7 +39,6 @@ function vt(e) {
     Y = touch.pageY;
 
     if (touches.length > 1) {
-
       for (let i = 0; i < touches.length; i++) {
         if (e.touches[i].target.id == e.target.id) {
           touch = touches[i] ?? changedTouches[i];
@@ -49,7 +48,6 @@ function vt(e) {
         }
       }
     }
-
   } else if (e.type.includes(`mouse`)) {
     X = e.clientX;
     Y = e.clientY;
@@ -57,11 +55,8 @@ function vt(e) {
 
   return {
     x: X,
-    y: Y
-  }
+    y: Y,
+  };
 }
 
-
-
-
-export { log, tinh, vt }
+export { log, tinh, vt };
